@@ -1,0 +1,37 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald|Montserrat:400,400i,700,700i&effect=anaglyph|fire-animation);
+@media screen and (min-width: 520px) {
+  body {
+    background: #223;
+    color: #eee;
+    font-size: .75em;
+    font-family: "Montserrat";
+    width: 480px;
+    margin: 1em auto;
+    display: -ms-grid;
+    display: grid;
+    grid-gap: 1em;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: 75px auto 100px;
+        grid-template-rows: 75px auto 100px;
+  }
+  body header {
+    padding: .5em;
+    background: #0005;
+    text-align: center;
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  body {
+    width: 960px;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+  }
+  body header {
+    grid-column: span 2;
+  }
+}
+/*# sourceMappingURL=main.css.map */
