@@ -9,11 +9,16 @@
     margin: 1em auto;
     display: -ms-grid;
     display: grid;
-    grid-gap: 1em;
+    grid-gap: 0.5em;
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
     -ms-grid-rows: 75px auto auto;
         grid-template-rows: 75px auto auto;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
   body header {
     padding: .5em;
@@ -83,6 +88,7 @@
   }
   body div#feed table {
     font-size: 1.5em;
+    padding: 0.5em;
     background: #0005;
     width: 100%;
   }
@@ -94,19 +100,38 @@
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
+    padding: 0.5em;
+    cursor: pointer;
   }
   body div#feed table tr th {
     text-align: start;
   }
   body div#feed table tr th:nth-of-type(1), body div#feed table tr td:nth-of-type(1) {
-    -webkit-box-flex: 3;
-        -ms-flex-positive: 3;
-            flex-grow: 3;
+    width: 66%;
   }
   body div#feed table tr th:nth-of-type(2), body div#feed table tr td:nth-of-type(2) {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
+    width: 34%;
+  }
+  body div#feed table tr.trActive {
+    text-decoration: line-through;
+  }
+  body a#btnDelete {
+    text-decoration: none;
+    background: #0005;
+    color: #eee;
+    font-size: 1.5em;
+    padding: 1em;
+    -webkit-writing-mode: vertical-rl;
+        -ms-writing-mode: tb-rl;
+            writing-mode: vertical-rl;
+    text-orientation: mixed;
+    line-height: 0;
+    width: 0px;
+    height: auto;
+    visibility: hidden;
+    position: fixed;
+    top: 15px;
+    right: 50px;
   }
   body footer {
     padding: .5em;
@@ -117,16 +142,76 @@
   }
 }
 
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1020px) {
   body {
     width: 960px;
     -ms-grid-columns: 1fr 1fr;
         grid-template-columns: 1fr 1fr;
+    background: blue;
   }
   body header, body nav, body div#feed, body footer {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  body {
+    width: 1220px;
+    -ms-grid-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+    background: red;
+  }
+  body header, body nav, body div#feed, body footer {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 3;
+    grid-column: 1/4;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    background: #0005;
+  }
+  body nav {
+    background: #0005;
+  }
+  body nav ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  body nav ul li {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+  body nav ul li a {
+    display: inherit;
+    -webkit-box-flex: inherit;
+        -ms-flex-positive: inherit;
+            flex-grow: inherit;
+    padding: 1em;
+    text-decoration: none;
+    color: #eee;
+  }
+  body nav ul li a:hover {
+    background: #fff3;
   }
 }
 /*# sourceMappingURL=main.css.map */
