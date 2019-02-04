@@ -1,0 +1,34 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Shoppinglist</title>
+    <link rel="stylesheet" href="./assets/main.css" type="text/css">
+</head>
+<body>
+    <h3>Shoppinglist</h3>
+    <div id="shoppinglist-table"></div>
+
+    <form action="./" method="POST">
+        <input type="text" name="item" placeholder="Add to list" required>
+        <button type="submit">Add item</button>
+    </form>
+
+    <ul>
+        <% for(var i = 0; i < shoppinglist.length; i++){ %>
+            <li><%= shoppinglist[i].item %></li>
+        <% } %>
+    </ul>
+
+
+    <form action="./" method="DELETE">
+        <input type="text" name="item" placeholder="delete" required>
+        <button type="submit">Delete item</button>
+    </form>
+
+    <form action="./" method="PUT">
+        <input type="numeric" name="id" placeholder="put" required>
+        <button type="submit">put item</button>
+    </form>
+
+</body>
+</html>
