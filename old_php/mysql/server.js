@@ -4,7 +4,6 @@ var app = express();
 
 //| Port
 var port = process.env.PORT || 8080;
-
 app.use(express.static(__dirname));
 
 var connection = mysql.createConnection({
@@ -27,6 +26,7 @@ connection.connect(function(error){
 app.get("/", function(req, resp){
 
     resp.render("index");
+
 
     //* about mysql
     connection.query("SELECT * FROM test", function(error, rows, field){
