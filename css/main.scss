@@ -144,6 +144,9 @@
             top: 15px;
             right: 50px;
         }
+        a#btnDelete:hover{
+            background: $lastBGCol;
+        }
 
         footer{
             padding: .5em;

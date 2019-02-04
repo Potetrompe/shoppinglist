@@ -133,6 +133,9 @@
     top: 15px;
     right: 50px;
   }
+  body a#btnDelete:hover {
+    background: #fff3;
+  }
   body footer {
     padding: .5em;
     background: #0005;

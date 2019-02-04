@@ -45,7 +45,21 @@ function newIndex(text, auth, bg, col){
     feed.firstElementChild.firstElementChild.appendChild(tr);
 }
 
+btnDelete.onclick = function(){
+    var trDelete = 
+        feed.
+        firstElementChild.
+        firstElementChild.
+        querySelectorAll("tr.trActive");
+
+    console.log(trDelete);
+    for (let i = 0; i < trDelete.length; i++) {
+        //* Delete from shoppinglist where id=trDelete[i];
+        
+    }
+}
+
 newIndex("text", "auth", "s");
 
 
-console.log(trArr);
+// console.log(trArr);
