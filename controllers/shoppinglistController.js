@@ -23,17 +23,19 @@ module.exports = function(app){
     app.use(bodyParser.urlencoded({extended: true}));   // support for URL-encoded bodies
 
 
-    //All request handlers
-    app.get("/", function(req, res){
-        //Get data from mongoDB and pass it to view
-        Shoppinglist.find({/*item: "from DB!" */}, function(err, data){
+    //* All request handlers
+    app.get("/", function(req, res, next){
+        //console.log("got");
+        //? Get data from mongoDB and pass it to view
+        Shoppinglist.find({/*item: "nameOfItem" */}, function(err, data){
             if(err) throw err;
             res.render("./index.ejs", {shoppinglist: data}); //File in views-folder
         });
     });
 
-    app.post("/", urlencodedParser, function(req, res){
-        //Get data from view and add it to mongoDB
+    app.post("/", urlencodedParser, function(req, res, next){
+
+        //? Get data from view and add it to mongoDB
         var newShoppinglist = new Shoppinglist(req.body).save(function(err, data){
             if(err) throw err;
             //Render with updated data
@@ -50,23 +52,23 @@ module.exports = function(app){
         // res.render("./index.ejs", {shoppinglist: data});
     });
 
-    app.delete("/:item", function(req, res){
-        console.log("delete request recived");
-        //Deleted item from mongoDB
-        // console.log(req.params.item);
-        // Shoppinglist.find({item: req.params.item.replace(/\-/g, " ")}).remove(function(err, data){
-        //     if (err) throw err;
-        //     res.redirect("./");
-        // });
+    app.delete("/:item", function(req, res, next){
+        console.log(req.params.item);
+
+        //? Deleted item from mongoDB
+        Shoppinglist.find({item: req.params.item.replace(/\-/g, " ")}).remove(function(err, data){
+            if (err) throw err;
+            res.redirect("./");
+        });
         
-        // data = data.filter(function(shoppinglist){
-        //     return shoppinglist.item.replace(/ /g, "-") !== req.params.item;
-        // });
-        // res.json(data);
+        data = data.filter(function(shoppinglist){
+            return shoppinglist.item.replace(/ /g, "-") !== req.params.item;
+        });
+        res.json(data);
     });
     
-    app.get("/:id", function(req, res){
-        console.log(req.params.id);
+    app.get("/:id", function(req, res, next){
+        console.log("her: " + req.params.id);
     })
 
 

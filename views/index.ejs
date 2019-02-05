@@ -3,6 +3,9 @@
     <meta charset="UTF-8">
     <title>Shoppinglist</title>
     <link rel="stylesheet" href="./assets/main.css" type="text/css">
+    <link rel="shortcut icon" type="image/ico" href="./assets/media/favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./main.js"></script>
 </head>
 <body>
     <h3>Shoppinglist</h3>
@@ -21,8 +24,8 @@
 
 
     <form action="./" method="DELETE">
-        <input type="text" name="item" placeholder="delete" required>
-        <button type="submit">Delete item</button>
+        <input type="text" id="deleteField" name="item" placeholder="delete" required>
+        <button type="submit" class="deleteItem">Delete item</button>
     </form>
 
     <form action="./" method="PUT">
