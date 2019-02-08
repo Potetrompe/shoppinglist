@@ -1,10 +1,11 @@
 {
   "name": "shoppinglist",
-  "version": "1.0.0",
-  "description": "A shoppinglist with DB",
+  "version": "1.1.0",
+  "description": "Shoppinglist app with mongoDB",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,8 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "mongoose": "^5.4.9"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
   }
 }

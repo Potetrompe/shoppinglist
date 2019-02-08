@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    console.log("to main.js");
+
+    //? Gross jQuery
     $(".deleteItem").on("click", function(e){
         var inputVal = document.getElementById("deleteField").value;
         $.ajax({
@@ -15,4 +16,15 @@ $(document).ready(function(){
             }
         });
     });
+
+    //? Normal JS
+
+    const feed      = document.getElementById("feed");
+    const btnDelete = document.getElementById("btnDelete");
+
+
+
 });
+
+
+

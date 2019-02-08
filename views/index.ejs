@@ -8,30 +8,73 @@
     <script src="./main.js"></script>
 </head>
 <body>
-    <h3>Shoppinglist</h3>
-    <div id="shoppinglist-table"></div>
+    <header>
+        <h1 class="font-effect-anaglyph">Shopping list</h1>
+    </header>
 
-    <form action="./" method="POST">
+    <nav>
+        <ul> 
+            <!-- //* same length names: (looks better) -->
+            <li><a href="#">Tang</a></li>
+            <li><a href="#">Ting</a></li>
+            <li><a href="#">Groups</a></li>
+            <li><a href="./login.html">Login</a></li>
+        </ul>
+    </nav>  
+
+    <div id="feed">
+        <table>
+            <tr>
+                <th>What?</th>
+                <th>Who?</th>
+            </tr>
+            <tr>
+                <td>This</td>
+                <td>That</td>
+            </tr>
+            <tr>
+                <td>Tipp</td>
+                <td>Topp</td>
+            </tr>
+            <tr>
+                <td>Tapp</td>
+                <td>Tupp</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <a id="btnDelete" href="#">
+        Delete Selected
+    </a>
+
+
+    <form action="./" method="POST" id="formPOST">
         <input type="text" name="item" placeholder="Add to list" required>
         <button type="submit">Add item</button>
     </form>
 
+    <!--  
+    <%=  list[0]%>
+    -->
     <ul>
-        <% for(var i = 0; i < shoppinglist.length; i++){ %>
-            <li><%= shoppinglist[i].item %></li>
+        <% for(var i = 0; i < list.length; i++){ %>
+            <li><%= list[i].item %> on ID: <%= list[i].id%></li>
         <% } %>
     </ul>
 
+    <ul id="list"></ul>
+    
 
-    <form action="./" method="DELETE">
+    <form action="./" method="DELETE" id="formDELETE">
         <input type="text" id="deleteField" name="item" placeholder="delete" required>
         <button type="submit" class="deleteItem">Delete item</button>
     </form>
 
-    <form action="./" method="PUT">
-        <input type="numeric" name="id" placeholder="put" required>
-        <button type="submit">put item</button>
-    </form>
+
+ <footer>
+        Made by William V. / Potetrompe
+    </footer>
 
 </body>
 </html>

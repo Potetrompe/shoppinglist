@@ -26,141 +26,140 @@
         grid-template-columns: 1fr;
         grid-template-rows: 75px auto auto;
         
+        
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+    
+    header{
+        padding: .5em;
+        background: $altBGCol;
         
-        header{
-            padding: .5em;
-            background: $altBGCol;
-            
-            text-align: center;
+        text-align: center;
 
-            grid-column: span 1;
-            grid-row: 1/2;
-        }
-        nav{
+        grid-column: span 1;
+        grid-row: 1/2;
+    }
+    nav{
+        padding: 0;
+        margin: 0;
+
+        grid-column: span 1;
+        grid-row: 2/3;
+
+        ul{
             padding: 0;
             margin: 0;
+            list-style-type: none;
 
-            grid-column: span 1;
-            grid-row: 2/3;
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+            li{
+                flex-grow: 1;
+                padding: 0em;
+                margin: 0em;
+                text-align: center;
 
-            ul{
-                padding: 0;
-                margin: 0;
-                list-style-type: none;
-
-                display:flex;
-                flex-direction: row;
-                justify-content: space-between;
-                li{
-                    flex-grow: 1;
-                    padding: 0em;
-                    margin: 0em;
-                    text-align: center;
-
-                    display: inherit;
-                    flex-direction: inherit;
-                    justify-content: inherit;
-                    background: $altBGCol;
-
-                    a{
-                        text-decoration: none;
-                        flex-grow: inherit;
-                        padding: 1em;
-                        color: $mainTxtCol;
-                    }
-                    a:hover{
-                        background: $lastBGCol
-                    }
-                }
-                
-            }
-        }
-
-        div#feed{
-            grid-column: span 1;
-            grid-row: 3/4;
-
-            table{
-                //border: 1px solid $mainTxtCol;
-                font-size: 1.5em;
-                padding: 0.5em;
-
+                display: inherit;
+                flex-direction: inherit;
+                justify-content: inherit;
                 background: $altBGCol;
-                width: 100%;
 
-                tr{
-                    display: flex;
-                    flex-direction: row;
-                    
-                    padding: 0.5em;
-                    cursor: pointer;
-
-                    th{
-                        //background: $lastBGCol;
-                        //border: 1px solid $mainTxtCol;
-                        text-align: start; //* usikker
-                    }
-                    th:nth-of-type(1), td:nth-of-type(1){
-                        //flex-grow: 3;
-                        width: 66%;
-                    }
-                    th:nth-of-type(2), td:nth-of-type(2){
-                        //flex-grow: 1;
-                        width: 34%;
-                    }
+                a{
+                    text-decoration: none;
+                    flex-grow: inherit;
+                    padding: 1em;
+                    color: $mainTxtCol;
                 }
-                tr.trActive{
-                    //border: 2px solid red;
-                    //background: #0005;
-                    text-decoration: line-through;
+                a:hover{
+                    background: $lastBGCol
                 }
             }
-
-        }
-
-        a#btnDelete{
-            text-decoration: none;
-            background: $altBGCol;
-            color: $mainTxtCol;
-            font-size: 1.5em;
-            padding: 1em;
-
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            line-height: 0;
-
-            width: 0px;
-            height: auto;
-
-            visibility: hidden;
-
-            position: fixed;
-            top: 15px;
-            right: 50px;
-        }
-        a#btnDelete:hover{
-            background: $lastBGCol;
-        }
-
-        footer{
-            padding: .5em;
-            background: $altBGCol;
             
-            text-align: center;
-
-            grid-column: span 1;
-            grid-row: span 1;
         }
-        
+    }
 
+    div#feed{
+        grid-column: span 1;
+        grid-row: 3/4;
+
+        table{
+            //border: 1px solid $mainTxtCol;
+            font-size: 1.5em;
+            padding: 0.5em;
+
+            background: $altBGCol;
+            width: 100%;
+
+            tr{
+                display: flex;
+                flex-direction: row;
+                
+                padding: 0.5em;
+                cursor: pointer;
+
+                th{
+                    //background: $lastBGCol;
+                    //border: 1px solid $mainTxtCol;
+                    text-align: start; //* usikker
+                }
+                th:nth-of-type(1), td:nth-of-type(1){
+                    //flex-grow: 3;
+                    width: 66%;
+                }
+                th:nth-of-type(2), td:nth-of-type(2){
+                    //flex-grow: 1;
+                    width: 34%;
+                }
+            }
+            tr.trActive{
+                //border: 2px solid red;
+                //background: #0005;
+                text-decoration: line-through;
+            }
+        }
 
     }
+
+    a#btnDelete{
+        text-decoration: none;
+        background: $altBGCol;
+        color: $mainTxtCol;
+        font-size: 1.5em;
+        padding: 1em;
+
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        line-height: 0;
+
+        width: 0px;
+        height: auto;
+
+        visibility: hidden;
+
+        position: fixed;
+        top: 15px;
+        right: 50px;
+    }
+    a#btnDelete:hover{
+        background: $lastBGCol;
+    }
+
+    footer{
+        padding: .5em;
+        background: $altBGCol;
+        
+        text-align: center;
+
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+    
 
 }
 @media screen and (min-width : 1020px){
@@ -188,7 +187,7 @@
         
     }
 }
-@media screen and (max-width : 520px){git
+@media screen and (max-width : 520px){
     body{
         display: flex;
         flex-direction: column;
