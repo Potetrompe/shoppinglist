@@ -17,14 +17,4 @@ $(document).ready(function(){
         });
     });
 
-    //? Normal JS
-
-    const feed      = document.getElementById("feed");
-    const btnDelete = document.getElementById("btnDelete");
-
-
-
 });
-
-
-

@@ -1,26 +1,4 @@
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Shoppinglist</title>
-    <link rel="stylesheet" href="./assets/main.css" type="text/css">
-    <link rel="shortcut icon" type="image/ico" href="./assets/media/favicon.ico">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="./main.js"></script>
-</head>
-<body>
-    <header>
-        <h1 class="font-effect-anaglyph">Shopping list</h1>
-    </header>
-
-    <nav>
-        <ul> 
-            <!-- //* same length names: (looks better) -->
-            <li><a href="#">Tang</a></li>
-            <li><a href="#">Ting</a></li>
-            <li><a href="#">Groups</a></li>
-            <li><a href="./login.html">Login</a></li>
-        </ul>
-    </nav>  
+<% include inc/header%>
 
     <div id="feed">
         <table>
@@ -54,17 +32,6 @@
         <button type="submit">Add item</button>
     </form>
 
-    <!--  
-    <%=  list[0]%>
-    -->
-    <ul>
-        <% for(var i = 0; i < list.length; i++){ %>
-            <li><%= list[i].item %> on ID: <%= list[i].id%></li>
-        <% } %>
-    </ul>
-
-    <ul id="list"></ul>
-    
 
     <form action="./" method="DELETE" id="formDELETE">
         <input type="text" id="deleteField" name="item" placeholder="delete" required>
@@ -72,9 +39,5 @@
     </form>
 
 
- <footer>
-        Made by William V. / Potetrompe
-    </footer>
 
-</body>
-</html>
+<% include inc/footer%>

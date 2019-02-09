@@ -6,9 +6,12 @@ const mongoURL = "mongodb://admin:admin2000@ds221645.mlab.com:21645/shoppinglist
 mongoose.connect(mongoURL, { useNewUrlParser: true });
 
 //? Create schema - this is like a blueprint / template / "class"
-const shoppinglistSchema = new mongoose.Schema({id: Object, item: String});
+const shoppinglistSchema    = new mongoose.Schema({item: String, author: String});
+const usersSchema           = new mongoose.Schema({username: String, password: String, color: String});
+const groupSchema           = new mongoose.Schema({name: String, users: Array});
 
-const Shoppinglist = mongoose.model("Shoppinglist", shoppinglistSchema);
+const shoppinglist = mongoose.model("Shoppinglist", shoppinglistSchema);
+const users = mongoose.model("users", usersSchema);
 // var item1 = Shoppinglist({item: "from DB!"}).save(function(err){
 //     if(err) throw err;
 //     console.log("item saved");
@@ -27,61 +30,72 @@ module.exports = function(app){
     //* Request handlers
     app.get("/", (req, res) => {
         //? Get data from mongoDB and pass it to view
-        Shoppinglist.find({/*item: "nameOfItem" */}, (err, data) => {  //empty find = get all || select * from shoppinglist
+        shoppinglist.find({/*item: "nameOfItem" */}, (err, data) => {
             if(err) throw err;
             //console.log(data);
 
-            //* only sendt what i use
+            //* only send what i use
             let exp = [];
             data.forEach(li => exp.push({id: li._id, item: li.item}));
-            console.log(exp);
-            
-            //* File in views-folder & send data in listObj
-            res.render("./index.ejs", {list: exp}); 
+
+            res.render("./index.ejs", {list: exp});
         });
+        users.find({/*item: "nameOfItem" */}, (err, data) => {
+            if(err) throw err;
+            //console.log("userData: " + data);
+        });
+
+        /*
+        //? Querying
+            Finding documents is easy with Mongoose, which supports the rich query syntax of MongoDB. 
+            Documents can be retreived using each models find, findById, findOne, or where static methods.
+
+            Tank.find({ size: 'small' }).where('createdDate').gt(oneYearAgo).exec(callback);
+        */
     });
 
     app.post("/", urlencodedParser, (req, res) => {
 
-        let exp = {
+        let expListItem = {
+            //| {item: String, author: String}
             //id: 1, //* TODO: change to unique || id to _id (mongoDB)
-            item: req.body.item
+            item: req.body.item,
+            author: "_id: ???"
         }
-        //console.log(exp);
+        let expUser = {
+            //| {username: String, password: String, color: String}
+            username: "per",
+            password: "normann",
+            color: "0f00ff"
+        }
+        let expGroup = {
+            //| {name: String, users: Array}
+            
+        }
+        // console.log(expListItem);
+        // console.log(expUser);
 
         //? Get data from view and add it to mongoDB
-        var newData = new Shoppinglist(exp).save((err, data) => {
+        shoppinglist(expListItem).save((err, data) => {
             if(err) throw err;
             //* Render with updated data
             //res.render("./index.ejs", {shoppinglist: data});
             res.redirect("./");
         });
+        // users(expUser).save((err, data) => {
+        //     if(err) throw err;
+        //     console.log("posted to users: " + data);
+        // });
 
-        // var newData = {item: req.body.item};
-        // data.push(newData);
-
-        // // console.log("User added: " + req.body.item);
-        // // console.log(data[data.length-1]);
-
-        // res.render("./index.ejs", {shoppinglist: data});
     });
 
     app.delete("/:item", function(req, res){
-        //console.log(`deleted if any at item = ${req.params.item}`);
         
-        //? Deleted item from mongoDB
-        // Shoppinglist
-        //     .find({item: req.params.item.replace(/\-/g, " ")})
-        //     .remove(
-        //         function(err, data){
-        //             if (err) throw err;
-        //             //console.log(data.deletedCount);
-        //             res.redirect("./");
-        //         }
-        //     );
-        
-        Shoppinglist.deleteOne({item: req.params.item.replace(/\-/g, " ")}, err => err ? console.error(err) : console.log(`Deleted`));  
-        //*  TODO: delete at _id: xx;
+        //? Delete data from mongoDB
+        shoppinglist.deleteOne(
+            {item: req.params.item.replace(/\-/g, " ")}, 
+            err => err ? console.error(err) : console.log(`Deleted`));  
+        //*  TODO: get arr of selected ID from usr to delete
         
         // let data = data.filter(function(shoppinglist){
         //     return shoppinglist.item.replace(/ /g, "-") !== req.params.item;

@@ -1,0 +1,72 @@
+    const feed      = document.getElementById("feed");
+    const btnDelete = document.getElementById("btnDelete");
+
+    //* Globals
+    let trArr = [];
+    //trArr[i].firstElementChild.innerHTML = "";\
+    let trActive = true;
+    let list = [];
+
+
+    // for (let i = 0; i < ; i++) {
+
+    //     list.push("test");
+    // }
+    console.log("num of items in DB: <%= list.length%>");
+
+    function newIndex(text, author, bg, col){
+        const tr        = document.createElement("tr");
+        const tdText    = document.createElement("td");
+        const tdAuthor  = document.createElement("td");
+
+        text = String(text);
+        author = String(author);
+
+        tdText.innerHTML = text;
+        tdAuthor.innerHTML = author;
+        
+        tr.appendChild(tdText);
+        tr.appendChild(tdAuthor);
+
+        if(col != "" && bg != ""){
+            tr.style.background = "#0ff";
+            tr.style.color = "#000";
+        }
+        trArr.push(tr);
+        for (let i = 0; i < trArr.length; i++) {
+
+            trArr[i].onclick = () => {
+                this.classList.toggle("trActive");
+                
+                if(trActive){
+                    btnDelete.style.visibility = "visible";
+                    trActive = false;
+                }else{
+                    btnDelete.style.visibility = "hidden";
+                    trActive = true;
+                }
+                //console.log(this.classList);
+            }
+            
+        }
+
+        feed.firstElementChild.firstElementChild.appendChild(tr);
+    }
+
+    btnDelete.onclick = function(){
+        var trDelete = 
+            feed.
+            firstElementChild.
+            firstElementChild.
+            querySelectorAll("tr.trActive");
+
+        console.log(trDelete);
+        for (let i = 0; i < trDelete.length; i++) {
+            //* Delete from shoppinglist where id=trDelete[i];
+            
+        }
+    }
+
+    newIndex("text", "auth", "s");
+
+
