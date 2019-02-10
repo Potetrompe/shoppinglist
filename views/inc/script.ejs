@@ -4,54 +4,80 @@
     //* Globals
     let trArr = [];
     //trArr[i].firstElementChild.innerHTML = "";\
-    let trActive = true;
+    let trActive = [];
+    let exportArrOfID = "";
     let list = [];
 
-
-    // for (let i = 0; i < ; i++) {
-
-    //     list.push("test");
-    // }
-    console.log("num of items in DB: <%= list.length%>");
-
-    function newIndex(text, author, bg, col){
+    function newIndex(text, author, id, bg, col){
         const tr        = document.createElement("tr");
         const tdText    = document.createElement("td");
         const tdAuthor  = document.createElement("td");
 
-        text = String(text);
-        author = String(author);
+        text    = String(text);
+        author  = String(author);
+        id      = String(id);
 
-        tdText.innerHTML = text;
-        tdAuthor.innerHTML = author;
+        tdText.innerHTML    = text;
+        tdAuthor.innerHTML  = author;
+        tr.id               = id;
         
         tr.appendChild(tdText);
         tr.appendChild(tdAuthor);
 
-        if(col != "" && bg != ""){
-            tr.style.background = "#0ff";
+        if(!col || !bg){
+            tr.style.background = "#0ff8";
             tr.style.color = "#000";
+            //console.log("default clol");
+        }else if(col && bg){
+            tr.style.background = "#${bg}";
+            tr.style.color = "#${col}";
+            //console.log("set col: " + col);
         }
-        trArr.push(tr);
-        for (let i = 0; i < trArr.length; i++) {
 
-            trArr[i].onclick = () => {
-                this.classList.toggle("trActive");
-                
-                if(trActive){
-                    btnDelete.style.visibility = "visible";
-                    trActive = false;
-                }else{
-                    btnDelete.style.visibility = "hidden";
-                    trActive = true;
-                }
-                //console.log(this.classList);
+        tr.onclick = () => {
+            //* Toggle active-class
+            tr.classList.toggle("trActive");
+
+            //* if not exist in arr => add else remove
+            if(trActive.indexOf(tr.id) == -1){
+                trActive.push(tr.id);
+            }else{
+                trActive.splice(trActive.indexOf(tr.id), 1);
+            }
+            //console.log();
+            
+            //* Change vis of delete-button if any items are selected
+            if(trActive.length <= 0){
+                btnDelete.style.visibility = "hidden";
+            }else if(trActive.length > 0){
+                btnDelete.style.visibility = "visible";
             }
             
+            //console.log(trActive.indexOf(tr.id), trActive);
+            exportArrOfID = JSON.stringify(trActive);
         }
 
+        trArr.push(tr);
+
+        //* Append to feed
         feed.firstElementChild.firstElementChild.appendChild(tr);
     }
+
+    //* Convert from obj => string => obj
+    <% list.forEach(obj => {
+        %>list.push({
+            id: "<%= obj.id%>",
+            item: "<%= obj.item%>",
+            author: "<%= obj.author%>"
+            }
+        );<%
+    });%>
+    //console.log(list);
+    
+
+    //| DUMMY: newIndex("text", "auth", 2, "s");
+    list.forEach(obj => newIndex(obj.item, obj.author, obj.id));
+    
 
     btnDelete.onclick = function(){
         var trDelete = 
@@ -59,14 +85,38 @@
             firstElementChild.
             firstElementChild.
             querySelectorAll("tr.trActive");
-
-        console.log(trDelete);
-        for (let i = 0; i < trDelete.length; i++) {
-            //* Delete from shoppinglist where id=trDelete[i];
             
-        }
+        //* un-select all
+        trDelete.forEach(selected => selected.classList.toggle("trActive"));
+
+
+        //? Delete from shoppinglist where id=selected;
+        //* as JSON
+        //console.log(exportArrOfID);
+        //* as array
+        //console.log(JSON.parse(exportArrOfID));
+        
+        $.ajax({
+            type: "DELETE",
+            url : "/",
+            contentType: "application/json",
+            data: JSON.stringify(JSON.parse(exportArrOfID)),
+            success: function(res){
+                console.log("deleting with btn, " + res);
+                //location.reload();
+                //window.location.href="/";
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+
+        //? hide btn && clear trActive-array
+        btnDelete.style.visibility = "hidden";
+        trActive = [];
+        
     }
 
-    newIndex("text", "auth", "s");
+    
 
 

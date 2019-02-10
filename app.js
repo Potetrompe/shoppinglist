@@ -13,5 +13,6 @@ app.use(express.static("./public"));
 shoppinglistController(app);
 
 //Listen to port
-app.listen(process.env.PORT || 8080);
-console.log("Port: heroku descided or 8080");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT);
+console.log(`Port: ${PORT}`);

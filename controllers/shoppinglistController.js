@@ -32,12 +32,18 @@ module.exports = function(app){
         //? Get data from mongoDB and pass it to view
         shoppinglist.find({/*item: "nameOfItem" */}, (err, data) => {
             if(err) throw err;
-            //console.log(data);
 
             //* only send what i use
             let exp = [];
-            data.forEach(li => exp.push({id: li._id, item: li.item}));
+            data.forEach(item => exp.push(
+                {
+                    id: item._id, 
+                    item: item.item,
+                    author: item.author
+                }
+            ));
 
+            //console.log(exp);
             res.render("./index.ejs", {list: exp});
         });
         users.find({/*item: "nameOfItem" */}, (err, data) => {
@@ -56,11 +62,13 @@ module.exports = function(app){
 
     app.post("/", urlencodedParser, (req, res) => {
 
+        console.log(req.body.item);
+
         let expListItem = {
             //| {item: String, author: String}
             //id: 1, //* TODO: change to unique || id to _id (mongoDB)
             item: req.body.item,
-            author: "_id: ???"
+            author: "default"
         }
         let expUser = {
             //| {username: String, password: String, color: String}
@@ -89,18 +97,46 @@ module.exports = function(app){
 
     });
 
+
+    //? DELETE with form
     app.delete("/:item", function(req, res){
-        
         //? Delete data from mongoDB
         shoppinglist.deleteOne(
             {item: req.params.item.replace(/\-/g, " ")}, 
-            err => err ? console.error(err) : console.log(`Deleted`));  
+            (err, data) => {
+                if(err){
+                    console.error(err);
+                }else{
+                    console.log(`Deleted ${data.deletedCount} at item = ${req.params.item}`);
+                }
+            }
+        );  
         //*  TODO: get arr of selected ID from usr to delete
         
         // let data = data.filter(function(shoppinglist){
         //     return shoppinglist.item.replace(/ /g, "-") !== req.params.item;
         // });
         // res.json(data);
+    });
+
+    //? DELETE with btn
+    app.delete("/", (req, res) => {
+        //console.log(req.body);
+
+        for (let i = 0; i < req.body.length; i++) {
+            shoppinglist.deleteOne(
+                {_id: req.body[i]},
+                (err, data) => {
+                    if(err){
+                        console.error(err);
+                    }else{
+                        console.log(`Deleted ${data.deletedCount} at ID = ${req.body[i]}`);
+                    }
+                }    
+            );
+        }
+
+        
     });
     
     
