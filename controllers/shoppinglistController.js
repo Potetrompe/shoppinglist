@@ -21,7 +21,7 @@ const users = mongoose.model("users", usersSchema);
 //var data = [{item: "fItem"}, {item: "nItem"}, {item: "lItem"}];
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 
-module.exports = function(app){
+module.exports = app => {
 
     app.use(bodyParser.json());                         // support for JSON-encoded bodies
     app.use(bodyParser.urlencoded({extended: true}));   // support for URL-encoded bodies
@@ -46,6 +46,8 @@ module.exports = function(app){
             //console.log(exp);
             res.render("./index.ejs", {list: exp});
         });
+
+        //? data from users (authorID and color)
         users.find({/*item: "nameOfItem" */}, (err, data) => {
             if(err) throw err;
             //console.log("userData: " + data);
@@ -60,41 +62,78 @@ module.exports = function(app){
         */
     });
 
+    app.get("/users", (req, res) => {
+
+        res.render("./users.ejs", {something: "some data"});
+
+
+       //res.send("login/register");
+    });
+
+    app.get("/groups", (req, res) => {
+        
+        res.render("./groups.ejs", {something: "some data"});
+        
+        
+        //res.send("Groups");
+    });
+
+    //? ADD item to DB
     app.post("/", urlencodedParser, (req, res) => {
 
         console.log(req.body.item);
 
-        let expListItem = {
+        let itemData = {
             //| {item: String, author: String}
             //id: 1, //* TODO: change to unique || id to _id (mongoDB)
             item: req.body.item,
             author: "default"
         }
-        let expUser = {
-            //| {username: String, password: String, color: String}
-            username: "per",
-            password: "normann",
-            color: "0f00ff"
-        }
-        let expGroup = {
-            //| {name: String, users: Array}
-            
-        }
-        // console.log(expListItem);
-        // console.log(expUser);
 
         //? Get data from view and add it to mongoDB
-        shoppinglist(expListItem).save((err, data) => {
+        shoppinglist(itemData).save((err, data) => {
             if(err) throw err;
             //* Render with updated data
             //res.render("./index.ejs", {shoppinglist: data});
             res.redirect("./");
         });
-        // users(expUser).save((err, data) => {
-        //     if(err) throw err;
-        //     console.log("posted to users: " + data);
-        // });
 
+    });
+
+    //? Register User
+    app.post("/register", urlencodedParser, (req, res) => {
+        
+        let userData = {
+            //| {username: String, password: String, color: String}
+            username: req.body.username,
+            password: req.body.password,
+            color: req.body.color
+        }
+        
+        console.log(userData);
+
+        users(userData).save((err, data) => {
+            if(err) throw err;
+            console.log("posted to users: " + data);
+
+            res.redirect("./");
+            //res.send(data);
+        });
+
+    });
+
+    //? Log in User
+    app.post("/login", urlencodedParser, (req, res) => {
+        
+        let userData = {
+            //| {name: String, users: Array}
+            username: req.body.username,
+            password: req.body.password
+        }
+        
+        console.log(userData);
+
+        res.send(userData);
     });
 
 
@@ -136,6 +175,8 @@ module.exports = function(app){
             );
         }
 
+        //* For refreshing page after delete
+        res.send();
         
     });
     

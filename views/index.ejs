@@ -1,3 +1,4 @@
+<% let navHTML1 = "Groups", navHTML2 = "Login", navHref1 = "./groups", navHref2 = "./users" %>
 <% include inc/header%>
 
     <div id="feed">
@@ -20,12 +21,14 @@
         <button type="submit">Add item</button>
     </form>
 
-
+    <!--
     <form action="./" method="DELETE" id="formDELETE">
         <input type="text" id="deleteField" name="item" placeholder="delete" required>
         <button type="submit" class="deleteItem">Delete item</button>
-    </form>
+    </form> 
+    -->
 
-
+    <!-- //? include JS-script -->
+    <script type="text/javascript"><% include ./inc/script %></script>
 
 <% include inc/footer%>

@@ -90,6 +90,10 @@
         trDelete.forEach(selected => selected.classList.toggle("trActive"));
 
 
+        console.log(`ID of btn: ${btnDelete.id}`);
+
+
+
         //? Delete from shoppinglist where id=selected;
         //* as JSON
         //console.log(exportArrOfID);
@@ -104,7 +108,8 @@
             success: function(res){
                 console.log("deleting with btn, " + res);
                 //location.reload();
-                //window.location.href="/";
+                window.location.href="/";
+                
             },
             error: function(err){
                 console.log(err);
