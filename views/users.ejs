@@ -1,31 +1,32 @@
 <% let navHTML1 = "Home", navHTML2 = "Groups", navHref1 = "./", navHref2 = "./groups" %>
 <% include inc/header%>
 
+<div class="container">
 
-<div id="loginForm" class="userForm">
-    <h1>Log in</h1>
-    <form action="./login" method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <button type="submit">Log in</button>
-    </form>
+    <div id="loginForm" class="userForm">
+        <h1>Log in</h1>
+        <form action="./login" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <button type="submit">Log in</button>
+        </form>
+    </div>
+
+    <div id="registerForm" class="userForm">
+        <h1>Register</h1>
+        <form action="./register" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password, NOT SECURE" <!--  required-->
+            <input type="text" name="color" placeholder="Color" <!--  required--><br>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <button id="btnRegister">No account?</button>
+
+
+    users <br>
+
+    something = <%= something %>
 </div>
-
-<div id="registerForm" class="userForm">
-    <h1>Register</h1>
-    <form action="./register" method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password, NOT SECURE" <!--  required-->
-        <input type="text" name="color" placeholder="Color" <!--  required--><br>
-        <button type="submit">Register</button>
-    </form>
-</div>
-<button id="btnRegister">No account?</button>
-
-
-
-users <br>
-
-something = <%= something %>
 
 <% include inc/footer%>

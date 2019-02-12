@@ -1,6 +1,7 @@
 <% let navHTML1 = "Groups", navHTML2 = "Login", navHref1 = "./groups", navHref2 = "./users" %>
 <% include inc/header%>
 
+<div class="container">
     <div id="feed">
         <table>
             <tr>
@@ -8,12 +9,9 @@
                 <th>Who?</th>
             </tr>
         </table>
+        <a id="btnDelete" href="#">Delete Selected</a>
 
     </div>
-
-    <a id="btnDelete" href="#">
-        Delete Selected
-    </a>
 
 
     <form action="./" method="POST" id="formPOST">
@@ -27,8 +25,8 @@
         <button type="submit" class="deleteItem">Delete item</button>
     </form> 
     -->
+</div>
 
-    <!-- //? include JS-script -->
     <script type="text/javascript"><% include ./inc/script %></script>
 
 <% include inc/footer%>

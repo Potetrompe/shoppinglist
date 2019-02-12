@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <title>Shoppinglist</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="./assets/main.css" type="text/css">
     <link rel="shortcut icon" type="image/ico" href="./assets/media/favicon.ico">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -10,14 +11,15 @@
 </head>
 <body>
     <header>
-        <h1 class="font-effect-anaglyph">Shopping list</h1>
+        <img id="logo" src="./assets/media/ICON.svg" alt="Logo">
+        <h1>Shoppinglist</h1>
+        
+        <nav>
+            <ul> 
+                <!-- //* same length names: (looks better) -->
+                <li><a href=<%= navHref1%>><strong><%= navHTML1%></strong></a></li>
+                <li><a href=<%= navHref2%>><strong><%= navHTML2%></strong></a></li>
+                
+            </ul>
+        </nav> 
     </header>
-
-    <nav>
-        <ul> 
-            <!-- //* same length names: (looks better) -->
-            <li><a href=<%= navHref1%>><%= navHTML1%></a></li>
-            <li><a href=<%= navHref2%>><%= navHTML2%></a></li>
-            
-        </ul>
-    </nav> 
