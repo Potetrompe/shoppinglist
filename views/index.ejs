@@ -5,26 +5,29 @@
     <div id="feed">
         <table>
             <tr>
-                <th>What?</th>
-                <th>Who?</th>
+                <th>Item</th>
+                <th>Author</th>
             </tr>
         </table>
         <a id="btnDelete" href="#">Delete Selected</a>
 
     </div>
 
-
+    <!-- String manipulation here :vv: -->
     <form action="./" method="POST" id="formPOST">
         <input type="text" name="item" placeholder="Add to list" required>
         <button type="submit">Add item</button>
     </form>
 
-    <!--
-    <form action="./" method="DELETE" id="formDELETE">
-        <input type="text" id="deleteField" name="item" placeholder="delete" required>
-        <button type="submit" class="deleteItem">Delete item</button>
-    </form> 
-    -->
+    
+</div>
+
+<div id="icons">
+
+    <h2>Common items</h2>    
+    <ul id="iconmenu">
+    </ul>
+
 </div>
 
     <script type="text/javascript"><% include ./inc/script %></script>

@@ -81,7 +81,18 @@ module.exports = app => {
     //? ADD item to DB
     app.post("/", urlencodedParser, (req, res) => {
 
-        console.log(req.body.item);
+        console.log("Added " + req.body.item);
+        // console.log(req.body);
+        
+        // let liValue = "unset";
+
+        // if(req.body.item != undefined){
+        //     console.log("val from form");
+        //     liValue = req.body.item;
+        // }else if(req.body != undefined){
+        //     console.log("val from icons");
+        //     liValue = req.body.item;
+        // }
 
         let itemData = {
             //| {item: String, author: String}
@@ -90,7 +101,7 @@ module.exports = app => {
             author: "default"
         }
 
-        //? Get data from view and add it to mongoDB
+        //? Get data from view (or icons) and add it to mongoDB
         shoppinglist(itemData).save((err, data) => {
             if(err) throw err;
             //* Render with updated data

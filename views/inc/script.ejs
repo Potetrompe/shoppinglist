@@ -8,6 +8,7 @@
     let exportArrOfID = "";
     let list = [];
 
+    //| maby calc color from bg
     function newIndex(text, author, id, bg, col){
         const tr        = document.createElement("tr");
         const tdText    = document.createElement("td");
@@ -25,8 +26,8 @@
         tr.appendChild(tdAuthor);
 
         if(!col || !bg){
-            tr.style.background = "#0ff8";
-            tr.style.color = "#000";
+            tr.style.background = "#fff8";
+            tr.style.color = "#000"; //? calc from bg
             //console.log("default clol");
         }else if(col && bg){
             tr.style.background = "#${bg}";
@@ -75,7 +76,7 @@
     //console.log(list);
     
 
-    //| DUMMY: newIndex("text", "auth", 2, "s");
+    //| DUMMY: newIndex("text", "auth", ++ bg & col); 
     list.forEach(obj => newIndex(obj.item, obj.author, obj.id));
     
 
@@ -89,10 +90,7 @@
         //* un-select all
         trDelete.forEach(selected => selected.classList.toggle("trActive"));
 
-
         console.log(`ID of btn: ${btnDelete.id}`);
-
-
 
         //? Delete from shoppinglist where id=selected;
         //* as JSON
@@ -120,8 +118,52 @@
         btnDelete.style.visibility = "hidden";
         trActive = [];
         
-    }
+    } 
 
     
+    //? Common items / icon-menu
+    //* add table in DB, linkt to icon, times used ++ every time used. Sort meny by popularity
 
+    const iconmenu = document.getElementById("iconmenu");
+
+    const addIcon = (src, id) => {
+
+        let li = document.createElement("li");
+        let a = document.createElement("a");
+        let icon = document.createElement("img");
+    
+        icon.src = src;
+        icon.id = id;
+
+        let dataToDB = {
+            item: icon.id
+        };
+        // console.log(JSON.stringify(dataToDB));
+        // console.log(dataToDB);
+        li.onclick = (e) => {
+            $.ajax({
+                type: "POST",
+                url : "/",
+                contentType: "application/json",
+                data: JSON.stringify(dataToDB),
+                success: res =>{
+                    window.location.href="/";
+                },
+                error: err => {
+                    console.log(err);
+                }
+            });
+
+        }
+
+        a.appendChild(icon);
+        li.appendChild(a);
+        iconmenu.appendChild(li);
+    }
+
+    addIcon(`./assets/media/icons/milkH.png`, "hel melk");
+    addIcon(`./assets/media/icons/cheese.png`, "ost");
+    addIcon(`./assets/media/icons/milkL.png`, "lett melk");
+    addIcon(`./assets/media/icons/eggs.png`, "egg");
+    addIcon(`./assets/media/icons/ham.png`, "sjinkepålegg");
 

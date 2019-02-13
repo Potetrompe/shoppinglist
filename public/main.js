@@ -18,27 +18,31 @@ $(document).ready(function(){
 
 
     const btnRegister = document.getElementById("btnRegister");
+    if(btnRegister){
+        let btnRegisterBool = false;
     
-    let btnRegisterBool = false;
-
-    btnRegister.onclick = () => {
-        //console.log(btnRegister);
-        const loginForm = document.getElementById("loginForm");
-        const registerForm = document.getElementById("registerForm");
-
-        if(btnRegisterBool){
-            loginForm.style.display = "block";
-            registerForm.style.display = "none";
-            btnRegister.innerHTML = "No account?";
-            btnRegisterBool = false;
-        }else if(!btnRegisterBool){
-            loginForm.style.display = "none";
-            registerForm.style.display = "block";
-            btnRegister.innerHTML = "Back to login";
-            btnRegisterBool = true;
+        btnRegister.onclick = () => {
+            //console.log(btnRegister);
+            const loginForm = document.getElementById("loginForm");
+            const registerForm = document.getElementById("registerForm");
+    
+            if(btnRegisterBool){
+    
+                loginForm.style.display = "block";
+                registerForm.style.display = "none";
+                btnRegister.innerHTML = "No account?";
+                btnRegisterBool = false;
+    
+            }else if(!btnRegisterBool){
+    
+                loginForm.style.display = "none";
+                registerForm.style.display = "block";
+                btnRegister.innerHTML = "Back to login";
+                btnRegisterBool = true;
+            }
+            //console.log(btnRegisterBool);
+    
         }
-        //console.log(btnRegisterBool);
-
     }
     
     

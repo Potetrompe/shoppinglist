@@ -2,7 +2,7 @@
 @media screen and (min-width: 320px) {
   body {
     background: #282828;
-    color: #eee;
+    color: #282828;
     font-size: .5em;
     font-family: "Roboto", sans-serif;
     width: 100%;
@@ -12,8 +12,8 @@
     grid-gap: 0.5em;
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
-    -ms-grid-rows: auto 1fr 5%;
-        grid-template-rows: auto 1fr 5%;
+    -ms-grid-rows: auto auto auto 22px;
+        grid-template-rows: auto auto auto 22px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -104,9 +104,6 @@
     background: #eecc00;
     color: #282828;
   }
-  div.container {
-    margin: 1em 20px;
-  }
   div.container div#feed {
     grid-column: span 1;
     -ms-grid-row: 3;
@@ -116,7 +113,7 @@
   div.container div#feed table {
     font-size: 1.5em;
     padding: 0.5em;
-    background: #0005;
+    background: #282828;
     color: #282828;
     width: 100%;
     border-radius: 5px;
@@ -129,7 +126,7 @@
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
-    margin: .2em 0;
+    border: 1px solid #282828;
     padding: 0.5em;
     border-radius: 5px;
     cursor: pointer;
@@ -140,9 +137,9 @@
     word-wrap: break-word;
   }
   div.container div#feed table tr th:nth-of-type(1), div.container div#feed table tr td:nth-of-type(1) {
-    -webkit-box-flex: 3;
-        -ms-flex-positive: 3;
-            flex-grow: 3;
+    -webkit-box-flex: 4;
+        -ms-flex-positive: 4;
+            flex-grow: 4;
   }
   div.container div#feed table tr th:nth-of-type(2), div.container div#feed table tr td:nth-of-type(2) {
     -webkit-box-flex: 1;
@@ -150,18 +147,23 @@
             flex-grow: 1;
   }
   div.container div#feed table tr:nth-of-type(1) {
-    background: #eecc00;
+    background: #ec0;
   }
-  div.container div#feed table tr:nth-of-type(1) td {
-    font-weight: 200;
+  div.container div#feed table tr:nth-of-type(1) th {
+    font-weight: 700 !important;
+    font-size: 1.55em;
   }
   div.container div#feed table tr.trActive {
+    background: #f005 !important;
+    color: #fff !important;
     text-decoration: line-through;
   }
   div.container a#btnDelete {
     text-decoration: none;
-    background: #0005;
-    color: #eee;
+    background: #282828;
+    color: #ec0;
+    border: 2px solid #282828;
+    border-radius: 5px;
     font-size: 1.5em;
     padding: 1em;
     -webkit-writing-mode: vertical-rl;
@@ -173,46 +175,95 @@
     height: auto;
     visibility: hidden;
     position: fixed;
-    top: 15px;
-    right: 50px;
+    top: 1em;
+    right: 2em;
   }
   div.container a#btnDelete:hover {
-    background: #fff3;
+    background: #ec0;
+    color: #282828;
   }
-  div.container div.userForm {
-    height: 250px;
-    width: 270px;
+  div.container div.userForm, div.container form#formPOST {
+    padding: 0 1em;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
   }
-  div.container div.userForm input {
+  div.container div.userForm input, div.container div.userForm button, div.container form#formPOST input, div.container form#formPOST button {
     -webkit-appearance: none;
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
     outline: none;
     font-size: 2em;
-    background: #fff;
-    border: 3px solid #000;
-    padding: .5em;
+    background: #282828;
+    border: 2px solid #ec0;
+    border-radius: 5px;
+    padding: .1em .4em;
+    width: 20%;
   }
-  div.container div.userForm input::-webkit-input-placeholder {
-    color: #000;
-    font-size: 1em;
+  div.container div.userForm input, div.container form#formPOST input {
+    -webkit-box-flex: 4;
+        -ms-flex-positive: 4;
+            flex-grow: 4;
+    margin-right: .5em;
   }
-  div.container div.userForm input:-ms-input-placeholder {
-    color: #000;
-    font-size: 1em;
+  div.container div.userForm button, div.container form#formPOST button {
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
   }
-  div.container div.userForm input::-ms-input-placeholder {
-    color: #000;
-    font-size: 1em;
+  div.container div.userForm input::-webkit-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-webkit-input-placeholder, div.container form#formPOST input {
+    color: #ec0;
   }
-  div.container div.userForm input::placeholder {
-    color: #000;
-    font-size: 1em;
+  div.container div.userForm input:-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input:-ms-input-placeholder, div.container form#formPOST input {
+    color: #ec0;
   }
-  div.container div.userForm div#loginForm {
+  div.container div.userForm input::-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-ms-input-placeholder, div.container form#formPOST input {
+    color: #ec0;
+  }
+  div.container div.userForm input::placeholder, div.container div.userForm input, div.container form#formPOST input::placeholder, div.container form#formPOST input {
+    color: #ec0;
+  }
+  div.container div.userForm input::-webkit-input-placeholder, div.container form#formPOST input::-webkit-input-placeholder {
+    font-size: .8em;
+  }
+  div.container div.userForm input:-ms-input-placeholder, div.container form#formPOST input:-ms-input-placeholder {
+    font-size: .8em;
+  }
+  div.container div.userForm input::-ms-input-placeholder, div.container form#formPOST input::-ms-input-placeholder {
+    font-size: .8em;
+  }
+  div.container div.userForm input::placeholder, div.container form#formPOST input::placeholder {
+    font-size: .8em;
+  }
+  div.container div.userForm button, div.container form#formPOST button {
+    cursor: pointer;
+    background: #ec0;
+    color: #282828;
+  }
+  div.container div.userForm button:hover, div.container form#formPOST button:hover {
+    background: #282828;
+    color: #ec0;
+  }
+  div.container div#loginForm {
     display: block;
   }
-  div.container div.userForm div#registerForm {
+  div.container div#loginForm form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  div.container div#loginForm form input {
+    width: 100%;
+  }
+  div.container div#registerForm {
     display: none;
   }
   div.container button#btnRegister, div.container div.userForm button {
@@ -226,42 +277,137 @@
     border: 3px solid #000;
     padding: 10px 20px;
   }
+  div#icons {
+    color: #fff;
+    margin: .8em;
+  }
+  div#icons h2 {
+    padding: .5em 1em;
+    margin: 0;
+    border: 2px solid #282828;
+    border-radius: 5px;
+    background: #ec0;
+    color: #282828;
+    font-size: 2em;
+  }
+  div#icons ul#iconmenu {
+    list-style-type: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    margin: .5em 0 0 0;
+    padding: 0;
+    background: #fff;
+    border: 2px solid #282828;
+    border-radius: 5px;
+  }
+  div#icons ul#iconmenu li {
+    cursor: pointer;
+    padding: .5em;
+  }
+  div#icons ul#iconmenu li img {
+    width: 100px;
+    height: 100px;
+  }
+  div#icons ul#iconmenu li:hover {
+    background: #0002;
+    border-radius: 5px;
+  }
   footer {
     padding: .5em;
     background: #0005;
+    color: #fff;
     text-align: center;
     grid-column: span 1;
     grid-row: span 1;
   }
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 700px) {
   body {
-    width: 960px;
-    margin: 1em auto;
-    font-size: 1em;
+    margin: 0;
+    font-size: .75em;
     -ms-grid-columns: 1fr 1fr;
         grid-template-columns: 1fr 1fr;
-    background: blue;
+    -ms-grid-rows: auto 1fr 30px;
+        grid-template-rows: auto 1fr 30px;
   }
-  body header, body nav, body div#feed, body footer {
+  body header, body nav, body footer {
     -ms-grid-column: 1;
     -ms-grid-column-span: 2;
     grid-column: 1/3;
+  }
+  body header {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  body header h1 {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    font-size: 6.2em;
+  }
+  body header nav {
+    width: 20%;
+    margin: 1em;
+  }
+  body header nav ul {
+    height: 100%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  body header nav ul li {
+    margin: 0 0 .2em 0;
+    width: 100%;
+  }
+  body div.container {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2/3;
+  }
+  body div.container a#btnDelete {
+    top: 7em;
+  }
+  body div#icons {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1 / 2;
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 1;
+    grid-row: 2 / 3;
   }
 }
 
 @media screen and (min-width: 1280px) {
   body {
-    width: 1220px;
     -ms-grid-columns: 1fr 1fr 1fr;
         grid-template-columns: 1fr 1fr 1fr;
-    background: red;
   }
-  body header, body nav, body div#feed, body footer {
+  body header, body nav, body footer {
     -ms-grid-column: 1;
     -ms-grid-column-span: 3;
     grid-column: 1/4;
+  }
+  body div.container {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 1;
+    grid-column: 2 / 3;
   }
 }
 

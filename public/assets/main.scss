@@ -6,24 +6,18 @@
     $altFont:  'Oswald';
 //-----Colors-----//
     $BG1: #282828; 
-    $BG2: #eecc00;
+    $BG2: #ec0;
     $BG3: #0005;
-    $BG1Hover: red;
-    $BG2Hover: blue;
+    $BG4: #eecc00; //* header
 
     $COL1: #fff;
 
-    $mainTxtCol: #eee;//rgb(35, 32, 32);
-    $altTxtCol: #334;
 
-    $mainBGCol: #334;//rgb(200, 206, 173);
-    $altBGCol: #0005;//#33555340;
-    $lastBGCol: #fff3;
 //-----Style-----//
 @media screen and (min-width : 320px){    
     body{
         background: $BG1;
-        color: $mainTxtCol;
+        color: $BG1;
         font-size: .5em;
         font-family: $H1Font;
 
@@ -33,9 +27,11 @@
         display: grid;
         grid-gap: 0.5em;
         grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr 5%; // 15 eller auto
+        grid-template-rows: auto auto auto 22px; // 15 eller auto
         
-        
+        // overflow-x: hidden;
+        // overflow-y: hidden;
+
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -46,7 +42,7 @@
     
     header{
         //padding: .5em;
-        background: $BG2;
+        background: $BG4;
         color: $BG1;
         text-align: center;
 
@@ -103,11 +99,11 @@
                         border: 2px solid $BG1;
                         border-radius: 3px;
                         background: $BG1;
-                        color: $BG2;
+                        color: $BG4;
                         font-size: 1em;
                     }
                     a:hover{
-                        background: $BG2;
+                        background: $BG4;
                         color: $BG1;
                     }
                 }
@@ -117,7 +113,7 @@
     }
 
     div.container{
-        margin: 1em 20px;
+        // margin: 1em 20px; // made a scroll-bug
 
         div#feed{
             grid-column: span 1;
@@ -127,7 +123,7 @@
                 font-size: 1.5em;
                 padding: 0.5em;
     
-                background: $BG3;
+                background: $BG1;
                 color: $BG1;
                 width: 100%;
                 border-radius: 5px;
@@ -135,19 +131,19 @@
                 tr{
                     display: flex;
                     flex-direction: row;
-                    margin: .2em 0;
-                    
+                    border: 1px solid $BG1;
                     padding: 0.5em;
                     border-radius: 5px;
                     cursor: pointer;
-    
+                    // background-color: #0005 !important;
+
                     th, td{
                         text-align: start; //* usikker
-                        width: 20%;
+                        width: 20%; // 20% before flex grow
                         word-wrap: break-word;
                     }
                     th:nth-of-type(1), td:nth-of-type(1){
-                        flex-grow: 3;
+                        flex-grow: 4;
                         // width: 66%;
                     }
                     th:nth-of-type(2), td:nth-of-type(2){
@@ -158,23 +154,28 @@
                 tr:nth-of-type(1){
                     background: $BG2;
                     
-                    td{
-                        font-weight: 200;
+                    th{
+                        font-weight: 700 !important; //doesnt work :/
+                        font-size: 1.55em; //same height as h2 at icons
                     }
                 }
                 tr.trActive{
                     //border: 2px solid red;
-                    //background: #0005;
+                    background: #f005 !important;
+                    color: $COL1 !important;
                     text-decoration: line-through;
                 }
             }
     
         }
     
+        //| Delete selected - button
         a#btnDelete{
             text-decoration: none;
-            background: $altBGCol;
-            color: $mainTxtCol;
+            background: $BG1;
+            color: $BG2;
+            border: 2px solid $BG1;
+            border-radius: 5px;
             font-size: 1.5em;
             padding: 1em;
     
@@ -188,37 +189,79 @@
             visibility: hidden;
     
             position: fixed;
-            top: 15px;
-            right: 50px;
+            top: 1em;
+            right: 2em;
+
         }
         a#btnDelete:hover{
-            background: $lastBGCol;
+            background: $BG2;
+            color: $BG1;
         }
     
-        div.userForm{
+        //* Style for forms
+        div.userForm, form#formPOST{
     
-            height: 250px;
-            width:  270px;
+            // height: 250px;
+            //width:  100%;
+            padding: 0 1em;
+            display: flex;
+            flex-direction: row;
             
-            input{
+            input, button{
                 -webkit-appearance: none;
                 box-shadow: none !important; 
                 outline: none;
                 font-size: 2em;
-                background: #fff;
-                border: 3px solid #000;
-                padding: .5em;
-    
+                background: $BG1; //#fff;
+                border: 2px solid $BG2;
+                border-radius: 5px;
+                padding: .1em .4em;
+                //margin: 0 0 .5em 0;
+
+                width: 20%;
             }
-            input::placeholder { color: #000; font-size: 1em;}
+            input{
+                flex-grow: 4;
+                margin-right: .5em;
+            }
+            button{
+                flex-grow: 1;
+            }
+            input::placeholder, input { color: $BG2; }
             
-            div#loginForm{
-                display: block;
+            input::placeholder{
+                font-size: .8em;
             }
-            div#registerForm{
-                display: none;
+
+            button{
+                cursor: pointer;
+                background: $BG2;
+                // border-color: $BG2;
+                color: $BG1;
+            }
+            button:hover{
+                // border-color: $BG2;
+                background: $BG1;
+                color: $BG2;
+            }
+
+        }
+        div#loginForm{
+            display: block;
+
+            form{
+                display: flex;
+                flex-direction: column;
+
+                input{
+                    width: 100%;
+                }
             }
         }
+        div#registerForm{
+            display: none;
+        }
+
         button#btnRegister, div.userForm button{
             -webkit-appearance: none;
             box-shadow: none !important; 
@@ -231,10 +274,56 @@
         }
     }
 
+    div#icons{
+        color: $COL1;
+
+        //padding: 0 1em;
+        margin: .8em;
+        h2{
+            padding: .5em 1em;
+            margin: 0;
+            border: 2px solid $BG1;
+            border-radius: 5px;
+            background: $BG2;
+            color: $BG1;
+
+            font-size: 2em;
+
+        }
+        ul#iconmenu{
+            list-style-type: none;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            margin: .5em 0 0 0;
+            padding: 0;
+
+            background: #fff;
+            border: 2px solid $BG1;
+            border-radius: 5px;
+
+            //max-width: 400px;
+
+            li{
+                cursor: pointer;
+                padding: .5em;
+
+                img{
+                    width:  100px;
+                    height: 100px;
+                }
+            }
+            li:hover{
+                background: #0002;
+                border-radius: 5px;
+            }
+        }
+    }
 
     footer{
         padding: .5em;
-        background: $altBGCol;
+        background: $BG3;
+        color: $COL1;
         
         text-align: center;
 
@@ -242,31 +331,77 @@
         grid-row: span 1;
     }
     
-
 }
-@media screen and (min-width : 500px){
+@media screen and (min-width : 700px){ 
+    //* Split screen, list + icons of wares
     body{
-        width: 960px;
-        margin: 1em auto;
-        font-size: 1em;
+        //width: 960px;
+        margin: 0;//1em auto;
+        font-size: .75em;
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto 1fr 30px;
 
-        background: blue;
 
-        header, nav, div#feed, footer{
+        header, nav, footer{
             grid-column: 1/3;
         }
+
+        header{
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            h1{
+                justify-content: center;
+                font-size: 6.2em;
+            }
+
+            nav{
+                width: 20%;
+                margin: 1em;
+                ul{
+                    height: 100%;
+
+                    flex-direction: column;
+                    li{
+                        margin: 0 0 .2em 0;
+
+                        a{
+
+                        }
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        div.container{
+            grid-column: 2/3;
+
+            a#btnDelete{
+                top: 7em;
+            }
+        }
         
+        div#icons{
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+        }
+
     }
 }
 @media screen and (min-width : 1280px){
     body{
-        width: 1220px; //1280-(1020-960)px
+        //width: 1220px; //1280-(1020-960)px
         grid-template-columns: 1fr 1fr 1fr;
 
-        background: red;
-        header, nav, div#feed, footer{
+        //background: red;
+        header, nav, footer{
             grid-column: 1/4;
+        }
+        div.container{
+            grid-column: 2 / 3;
         }
         
     }
