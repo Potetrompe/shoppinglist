@@ -1,7 +1,7 @@
-var express = require("express");
-var shoppinglistController = require("./controllers/shoppinglistController.js");
+const express = require("express");
+const shoppinglistController = require("./controllers/shoppinglistController.js");
 
-var app = express();
+const app = express();
 
 //Set up template engine
 app.set("view engine", "ejs");
