@@ -1,7 +1,7 @@
 # Shoppinglist
 
 ```
-URL: localhost:3000
+URL: https://shoppinglist-voster.herokuapp.com/
 ```
 
 
