@@ -1,6 +1,6 @@
 # Shoppinglist
 
-[ShoppinglistApp](https://shoppinglist-voster.herokuapp.com/ "Shoppinglist App"){:target="_blank"}
+[ShoppinglistApp](https://shoppinglist-voster.herokuapp.com/ "Shoppinglist App")
 
 ```
 URL: https://shoppinglist-voster.herokuapp.com/
