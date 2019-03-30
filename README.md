@@ -6,6 +6,14 @@
 URL: https://shoppinglist-voster.herokuapp.com/
 ```
 
+## Magic Thrones game
+
+[Magic Thrones](https://shoppinglist-voster.herokuapp.com/MagicThrones/ "A HTML5 canvas & JS game")
+
+```
+URL: https://shoppinglist-voster.herokuapp.com/MagicThrones/
+```
+
 
 <!-- 
 Italic, bold, link:
