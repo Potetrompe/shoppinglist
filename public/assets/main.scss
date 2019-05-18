@@ -12,6 +12,14 @@
 
     $COL1: #fff;
 
+//-----Modifyer class-----//
+.warning{
+    color: #f00;
+    background: #fff;
+    border: 2px dashed red;
+    padding: .5em;
+    border-radius: 10px;
+}
 
 //-----Style-----//
 @media screen and (min-width : 320px){    
@@ -115,6 +123,7 @@
     div.container{
         // margin: 1em 20px; // made a scroll-bug
 
+        color: white;
         div#feed{
             grid-column: span 1;
             grid-row: 3/4;
@@ -237,7 +246,7 @@
                 cursor: pointer;
                 background: $BG2;
                 // border-color: $BG2;
-                color: $BG1;
+                color: #000;//$BG1;
             }
             button:hover{
                 // border-color: $BG2;
@@ -275,7 +284,7 @@
     }
 
     div#icons{
-        color: $COL1;
+        color: #f00;//$BG1;//$COL1;
 
         //padding: 0 1em;
         margin: .8em;
@@ -298,7 +307,7 @@
             margin: .5em 0 0 0;
             padding: 0;
 
-            background: #fff;
+            background: #fff3;
             border: 2px solid $BG1;
             border-radius: 5px;
 
@@ -309,12 +318,12 @@
                 padding: .5em;
 
                 img{
-                    width:  100px;
-                    height: 100px;
+                    width:  75px;
+                    height: 75px;
                 }
             }
             li:hover{
-                background: #0002;
+                background: #fff3;//#0002;
                 border-radius: 5px;
             }
         }

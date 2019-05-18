@@ -1,4 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Oswald|Montserrat:400,400i,700,700i&effect=anaglyph|fire-animation);
+.warning {
+  color: #f00;
+  background: #fff;
+  border: 2px dashed red;
+  padding: .5em;
+  border-radius: 10px;
+}
+
 @media screen and (min-width: 320px) {
   body {
     background: #282828;
@@ -103,6 +111,9 @@
   header nav ul li a:hover {
     background: #eecc00;
     color: #282828;
+  }
+  div.container {
+    color: white;
   }
   div.container div#feed {
     grid-column: span 1;
@@ -242,7 +253,7 @@
   div.container div.userForm button, div.container form#formPOST button {
     cursor: pointer;
     background: #ec0;
-    color: #282828;
+    color: #000;
   }
   div.container div.userForm button:hover, div.container form#formPOST button:hover {
     background: #282828;
@@ -278,7 +289,7 @@
     padding: 10px 20px;
   }
   div#icons {
-    color: #fff;
+    color: #f00;
     margin: .8em;
   }
   div#icons h2 {
@@ -303,7 +314,7 @@
             flex-direction: row;
     margin: .5em 0 0 0;
     padding: 0;
-    background: #fff;
+    background: #fff3;
     border: 2px solid #282828;
     border-radius: 5px;
   }
@@ -312,11 +323,11 @@
     padding: .5em;
   }
   div#icons ul#iconmenu li img {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
   }
   div#icons ul#iconmenu li:hover {
-    background: #0002;
+    background: #fff3;
     border-radius: 5px;
   }
   footer {
