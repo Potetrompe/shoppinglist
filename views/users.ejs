@@ -8,22 +8,24 @@
     <div id="loginForm" class="userForm">
         <h1>Log in</h1>
         <form action="./login" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required><br>
+            <input type="text" name="username" placeholder="Username" >
+            <input type="password" name="password" placeholder="Password" ><br>
             <button type="submit">Log in</button>
+            <button type="button" id="btnNoAcc">No account?</button>
         </form>
     </div>
 
     <div id="registerForm" class="userForm" style="display: none;">
         <h1>Register</h1>
         <form action="./register" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="username" placeholder="Username" >
             <input type="password" name="password" placeholder="Password, NOT SECURE" <!--  required-->
-            <input type="text" name="color" placeholder="Color" <!--  required--><br>
+            <input type="text" name="color" placeholder="Color, eks: a0f"><br>
             <button type="submit">Register</button>
+            <button type="button" id="btnBackToLogin">Back to login</button>
         </form>
     </div>
-    <button id="btnRegister">No account?</button>
+    <!-- <button id="btnRegister">No account?</button> -->
 
 
     <br>

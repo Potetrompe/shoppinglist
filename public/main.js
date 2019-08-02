@@ -15,36 +15,34 @@ $(document).ready(function(){
         });
     });
 
+    let boolRegisterLogin = false;
+    function switchLoginRegister() {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
 
-
-    const btnRegister = document.getElementById("btnRegister");
-    if(btnRegister){
-        let btnRegisterBool = false;
-    
-        btnRegister.onclick = () => {
-            //console.log(btnRegister);
-            const loginForm = document.getElementById("loginForm");
-            const registerForm = document.getElementById("registerForm");
-    
-            if(btnRegisterBool){
-    
-                loginForm.style.display = "block";
-                registerForm.style.display = "none";
-                btnRegister.innerHTML = "No account?";
-                btnRegisterBool = false;
-    
-            }else if(!btnRegisterBool){
-    
-                loginForm.style.display = "none";
-                registerForm.style.display = "block";
-                btnRegister.innerHTML = "Back to login";
-                btnRegisterBool = true;
-            }
-            //console.log(btnRegisterBool);
-    
+        if(
+            // loginForm.style.display == "none" && 
+            // registerForm.style.display == "block"
+            boolRegisterLogin
+        ){
+            loginForm.style.display = "block";
+            registerForm.style.display = "none";
+            boolRegisterLogin = false;
+        }else if(
+            // loginForm.style.display == "block" && 
+            // registerForm.style.display == "none"
+            !boolRegisterLogin
+        ){
+            loginForm.style.display = "none";
+            registerForm.style.display = "block";
+            boolRegisterLogin = true;
         }
     }
-    
+    const btnNoAcc = document.getElementById("btnNoAcc");
+    const btnBackToLogin = document.getElementById("btnBackToLogin");
+    btnNoAcc.onclick = switchLoginRegister;
+    btnBackToLogin.onclick = switchLoginRegister;
+
     
 
 });
