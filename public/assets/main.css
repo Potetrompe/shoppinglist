@@ -41,16 +41,29 @@
     grid-gap: 0;
     -ms-grid-columns: auto 1fr;
         grid-template-columns: auto 1fr;
+    -ms-grid-rows: auto auto;
+        grid-template-rows: auto auto;
   }
-  header img#logo {
-    height: 6em;
+  header a {
     -ms-grid-column: 1;
     -ms-grid-column-span: 1;
     grid-column: 1 / span 1;
     -ms-grid-row: 1;
     -ms-grid-row-span: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1 / 3;
+  }
+  header a img#logo {
+    height: 6em;
     margin: 1em;
+    -webkit-transition: -webkit-transform 75ms;
+    transition: -webkit-transform 75ms;
+    transition: transform 75ms;
+    transition: transform 75ms, -webkit-transform 75ms;
+  }
+  header a img#logo:hover {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+    cursor: pointer;
   }
   header h1 {
     font-size: 4em;
@@ -175,6 +188,7 @@
     color: #ec0;
     border: 2px solid #282828;
     border-radius: 5px;
+    border-color: #f00;
     font-size: 1.5em;
     padding: 1em;
     -webkit-writing-mode: vertical-rl;
@@ -240,15 +254,19 @@
   }
   div.container div.userForm input::-webkit-input-placeholder, div.container form#formPOST input::-webkit-input-placeholder {
     font-size: .8em;
+    color: #ec0a;
   }
   div.container div.userForm input:-ms-input-placeholder, div.container form#formPOST input:-ms-input-placeholder {
     font-size: .8em;
+    color: #ec0a;
   }
   div.container div.userForm input::-ms-input-placeholder, div.container form#formPOST input::-ms-input-placeholder {
     font-size: .8em;
+    color: #ec0a;
   }
   div.container div.userForm input::placeholder, div.container form#formPOST input::placeholder {
     font-size: .8em;
+    color: #ec0a;
   }
   div.container div.userForm button, div.container form#formPOST button {
     cursor: pointer;
@@ -256,6 +274,7 @@
     color: #000;
   }
   div.container div.userForm button:hover, div.container form#formPOST button:hover {
+    border-color: #ec0;
     background: #282828;
     color: #ec0;
   }
@@ -277,15 +296,28 @@
   div.container div#registerForm {
     display: none;
   }
-  div.container button#btnRegister, div.container div.userForm button {
+  div.container div#registerForm form {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  div.container div#registerForm form input {
+    width: 100%;
+  }
+  div.container div.userForm button {
     -webkit-appearance: none;
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
     outline: none;
     width: 50%;
-    font-size: 2em;
-    background: #157;
-    border: 3px solid #000;
+    font-size: 1.5em;
+    background: #ec0;
+    color: #282828;
+    border: 3px solid #282828;
     padding: 10px 20px;
   }
   div#icons {
