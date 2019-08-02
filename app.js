@@ -1,7 +1,24 @@
 const express = require("express");
+const session = require("express-session");
 const shoppinglistController = require("./controllers/shoppinglistController.js");
 
 const app = express();
+
+const TWO_HOURS = 1000 * 60 * 60 * 2;
+const SESS_NAME = "sessionID";
+const SESS_SECRET = "noonecanknowthisstring!";
+
+app.use(session({
+    name: SESS_NAME,
+    resave: false,
+    saveUninitialized: false,
+    secret: SESS_SECRET,
+    cookie: {
+        maxAge: TWO_HOURS,
+        sameSite: true,
+        secure: false,  //* true in production
+    }
+}));
 
 //Set up template engine
 app.set("view engine", "ejs");
@@ -14,5 +31,4 @@ shoppinglistController(app);
 
 //Listen to port
 const PORT = process.env.PORT || 8080;
-app.listen(PORT);
-console.log(`Port: ${PORT}`);
+app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
