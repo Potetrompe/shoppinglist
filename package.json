@@ -24,12 +24,12 @@
   },
   "homepage": "https://github.com/Potetrompe/shoppinglist#readme",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "ejs": "^2.6.1",
-    "express": "^4.16.4",
-    "mongoose": "^5.4.9"
+    "body-parser": "^1.19.0",
+    "ejs": "^2.6.2",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.7"
   },
   "devDependencies": {
-    "nodemon": "^1.18.9"
+    "nodemon": "^1.19.1"
   }
 }
