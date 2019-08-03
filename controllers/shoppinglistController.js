@@ -17,20 +17,52 @@ const users = mongoose.model("users", usersSchema);
 //     console.log("item saved");
 // });
 
-
 //var data = [{item: "fItem"}, {item: "nItem"}, {item: "lItem"}];
 const urlencodedParser = bodyParser.urlencoded({extended: false});
+
+
+const redirectLogin = (req, res, next) => {
+    if(!req.session.userID){
+        console.log(req.session.userID);
+        res.redirect("/users")
+    }else{
+        next();
+    }
+}
+
+const redirectHome = (req, res, next) => {
+    if(req.session.userID){
+        res.redirect("/")
+    }else{
+        next();
+    }
+}
+
+const redirectLogout = (req, res, next) => {
+    if(req.session.userID){
+        res.redirect("/logout");
+    }else{
+        next();
+    }
+}
+
 
 module.exports = app => {
 
     app.use(bodyParser.json());                         // support for JSON-encoded bodies
     app.use(bodyParser.urlencoded({extended: true}));   // support for URL-encoded bodies
-
+    
 
     //* Request handlers
-    app.get("/", (req, res) => {
+    app.get("/", redirectLogin, (req, res) => {
+
+        //? Log session cookie & userID
+        //console.log(req.session.userID, req.session.userName);
+
         //? Get data from mongoDB and pass it to view
-        shoppinglist.find({/*item: "nameOfItem" */}, (err, data) => {
+        queryObj = {author: req.session.userName};
+        if(req.session.admin){queryObj = {}};
+        shoppinglist.find(queryObj, (err, data) => {
             if(err) throw err;
 
             //* only send what i use
@@ -52,7 +84,7 @@ module.exports = app => {
             if(err) throw err;
             //console.log("userData: " + data);
         });
-
+        
         /*
         //? Querying
             Finding documents is easy with Mongoose, which supports the rich query syntax of MongoDB. 
@@ -60,17 +92,18 @@ module.exports = app => {
 
             Tank.find({ size: 'small' }).where('createdDate').gt(oneYearAgo).exec(callback);
         */
+
     });
 
-    app.get("/users", (req, res) => {
+    app.get("/users", /*redirectLogout,*/ (req, res) => {
 
-        res.render("./users.ejs", {something: "some data"});
+        res.render("./users.ejs", {userID: req.session.userID});
 
 
        //res.send("login/register");
     });
 
-    app.get("/groups", (req, res) => {
+    app.get("/groups", redirectLogin, (req, res) => {
         
         res.render("./groups.ejs", {something: "some data"});
         
@@ -79,7 +112,7 @@ module.exports = app => {
     });
 
     //? ADD item to DB
-    app.post("/", urlencodedParser, (req, res) => {
+    app.post("/", redirectLogin, urlencodedParser, (req, res) => {
 
         console.log("Added " + req.body.item);
         // console.log(req.body);
@@ -98,7 +131,7 @@ module.exports = app => {
             //| {item: String, author: String}
             //id: 1, //* TODO: change to unique || id to _id (mongoDB)
             item: req.body.item,
-            author: "default"
+            author: req.session.userName || "default"
         }
 
         //? Get data from view (or icons) and add it to mongoDB
@@ -120,36 +153,81 @@ module.exports = app => {
             password: req.body.password,
             color: req.body.color
         }
-        
-        console.log(userData);
+        //console.log(userData);
 
         users(userData).save((err, data) => {
             if(err) throw err;
             console.log("posted to users: " + data);
-
-            res.redirect("./");
-            //res.send(data);
+            
+            users.find({username: userData.username, password: userData.password}, (err, data) => {
+                if(err) throw err;
+                req.session.userID = data[data.length-1]._id;
+                req.session.userName = data[data.length-1].username;
+                console.log(
+                    data, 
+                    `UserID: ${req.session.userID} - 
+                    Username: ${req.session.userName}`
+                    );
+                res.redirect("./");
+            });
         });
-
+        
     });
 
     //? Log in User
-    app.post("/login", urlencodedParser, (req, res) => {
+    app.post("/login", redirectHome, urlencodedParser, (req, res) => {
         
         let userData = {
             //| {name: String, users: Array}
             username: req.body.username,
             password: req.body.password
         }
-        
         console.log(userData);
 
-        res.send(userData);
+
+        users.find({
+                username: userData.username, 
+                password: userData.password
+            }, (err, data) => {
+            if(err) throw err;
+
+            if(data[data.length-1]){
+                
+                userData.id = data[data.length-1]._id;
+                req.session.userID = userData.id;
+                req.session.userName = userData.username;
+                if(req.session.userName == "admin"){
+                    req.session.admin = true;
+                } 
+                console.log(
+                    data[data.length-1], 
+                    userData.id,
+                    req.session.userName);
+                //res.send(data);
+            }else{
+                console.log(`No user with that combination!`);
+            }
+            res.redirect("./users");
+        });
+
     });
+
+    app.post("/logout", redirectLogin, (req, res) => {
+        //console.log(`Logging out User:${req.session.userID}`);
+        //req.session.userID = 0;
+        console.log(req.body.userID);
+        if(req.body.userID == req.session.userID){
+            req.session.userID = 0;
+            req.session.destroy(err => {
+                console.log(err, req.session);
+            });
+        } 
+        res.redirect("/users");
+    }); 
 
 
     //? DELETE with form
-    app.delete("/:item", function(req, res){
+    app.delete("/:item", redirectLogin, function(req, res){
         //? Delete data from mongoDB
         shoppinglist.deleteOne(
             {item: req.params.item.replace(/\-/g, " ")}, 
@@ -170,7 +248,7 @@ module.exports = app => {
     });
 
     //? DELETE with btn
-    app.delete("/", (req, res) => {
+    app.delete("/", redirectLogin, (req, res) => {
         //console.log(req.body);
 
         for (let i = 0; i < req.body.length; i++) {
