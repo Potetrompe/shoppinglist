@@ -2,6 +2,13 @@
 <% include inc/header%>
 
 <div class="container">
+    <% if(userID){%>
+        User ID = <%= userID %>
+        <form method="POST" action="/logout">
+            <input type="hidden" value="<%= userID %>" name="userID">
+            <button type="submit">Log out</button>
+        </form>    
+    <% }else{ %>
 
     <h2 class="warning">WARNING, Not secure! Data not incrypted</h2>
 
@@ -27,16 +34,8 @@
     </div>
     <!-- <button id="btnRegister">No account?</button> -->
 
-
     <br>
 
-    
-    <% if(userID){%>
-        User ID = <%= userID %>
-        <form method="POST" action="/logout">
-            <input type="hidden" value="<%= userID %>" name="userID">
-            <button type="submit">Log out</button>
-        </form>    
     <% } %>
 </div>
 

@@ -55,8 +55,14 @@ module.exports = app => {
 
     //* Request handlers
     app.get("/", redirectLogin, (req, res) => {
+
+        //? Log session cookie & userID
+        //console.log(req.session.userID, req.session.userName);
+
         //? Get data from mongoDB and pass it to view
-        shoppinglist.find({/*item: "nameOfItem" */}, (err, data) => {
+        queryObj = {author: req.session.userName};
+        if(req.session.admin){queryObj = {}};
+        shoppinglist.find(queryObj, (err, data) => {
             if(err) throw err;
 
             //* only send what i use
@@ -87,8 +93,6 @@ module.exports = app => {
             Tank.find({ size: 'small' }).where('createdDate').gt(oneYearAgo).exec(callback);
         */
 
-        //? Logging session cookie
-        console.log(req.session.userID);
     });
 
     app.get("/users", /*redirectLogout,*/ (req, res) => {
@@ -127,7 +131,7 @@ module.exports = app => {
             //| {item: String, author: String}
             //id: 1, //* TODO: change to unique || id to _id (mongoDB)
             item: req.body.item,
-            author: "default"
+            author: req.session.userName || "default"
         }
 
         //? Get data from view (or icons) and add it to mongoDB
@@ -155,10 +159,15 @@ module.exports = app => {
             if(err) throw err;
             console.log("posted to users: " + data);
             
-            users.find({username: userData.username}, (err, data) => {
+            users.find({username: userData.username, password: userData.password}, (err, data) => {
                 if(err) throw err;
-                req.session.userID = data[0]._id;
-                console.log(data, `UserID: ${req.session.userID}`);
+                req.session.userID = data[data.length-1]._id;
+                req.session.userName = data[data.length-1].username;
+                console.log(
+                    data, 
+                    `UserID: ${req.session.userID} - 
+                    Username: ${req.session.userName}`
+                    );
                 res.redirect("./");
             });
         });
@@ -173,10 +182,34 @@ module.exports = app => {
             username: req.body.username,
             password: req.body.password
         }
-        
         console.log(userData);
 
-        res.send(userData);
+
+        users.find({
+                username: userData.username, 
+                password: userData.password
+            }, (err, data) => {
+            if(err) throw err;
+
+            if(data[data.length-1]){
+                
+                userData.id = data[data.length-1]._id;
+                req.session.userID = userData.id;
+                req.session.userName = userData.username;
+                if(req.session.userName == "admin"){
+                    req.session.admin = true;
+                } 
+                console.log(
+                    data[data.length-1], 
+                    userData.id,
+                    req.session.userName);
+                //res.send(data);
+            }else{
+                console.log(`No user with that combination!`);
+            }
+            res.redirect("./users");
+        });
+
     });
 
     app.post("/logout", redirectLogin, (req, res) => {
