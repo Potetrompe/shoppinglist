@@ -30,7 +30,14 @@
 
     <br>
 
-    something = <%= something %>
+    
+    <% if(userID){%>
+        User ID = <%= userID %>
+        <form method="POST" action="/logout">
+            <input type="hidden" value="<%= userID %>" name="userID">
+            <button type="submit">Log out</button>
+        </form>    
+    <% } %>
 </div>
 
 

@@ -93,7 +93,7 @@ module.exports = app => {
 
     app.get("/users", /*redirectLogout,*/ (req, res) => {
 
-        res.render("./users.ejs", {something: "some data"});
+        res.render("./users.ejs", {userID: req.session.userID});
 
 
        //res.send("login/register");
@@ -179,11 +179,18 @@ module.exports = app => {
         res.send(userData);
     });
 
-    app.get("/logout", redirectLogin, (req, res) => {
-        console.log(`Logging out User:${req.session.userID}`);
-        req.session.userID = 0;
+    app.post("/logout", redirectLogin, (req, res) => {
+        //console.log(`Logging out User:${req.session.userID}`);
+        //req.session.userID = 0;
+        console.log(req.body.userID);
+        if(req.body.userID == req.session.userID){
+            req.session.userID = 0;
+            req.session.destroy(err => {
+                console.log(err, req.session);
+            });
+        } 
         res.redirect("/users");
-    });
+    }); 
 
 
     //? DELETE with form
