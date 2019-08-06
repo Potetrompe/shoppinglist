@@ -4,7 +4,7 @@
 <div class="container">
     <% if(userID){%>
         User ID = <%= userID %>
-        <form method="POST" action="/logout">
+        <form method="POST" action="/logout" id="logoutForm">
             <input type="hidden" value="<%= userID %>" name="userID">
             <button type="submit">Log out</button>
         </form>    

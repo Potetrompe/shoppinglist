@@ -207,7 +207,7 @@
     background: #ec0;
     color: #282828;
   }
-  div.container div.userForm, div.container form#formPOST {
+  div.container div.userForm, div.container form#formPOST, div.container #logoutForm {
     padding: 0 1em;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -217,7 +217,7 @@
         -ms-flex-direction: row;
             flex-direction: row;
   }
-  div.container div.userForm input, div.container div.userForm button, div.container form#formPOST input, div.container form#formPOST button {
+  div.container div.userForm input, div.container div.userForm button, div.container form#formPOST input, div.container form#formPOST button, div.container #logoutForm input, div.container #logoutForm button {
     -webkit-appearance: none;
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
@@ -229,51 +229,51 @@
     padding: .1em .4em;
     width: 20%;
   }
-  div.container div.userForm input, div.container form#formPOST input {
+  div.container div.userForm input, div.container form#formPOST input, div.container #logoutForm input {
     -webkit-box-flex: 4;
         -ms-flex-positive: 4;
             flex-grow: 4;
     margin-right: .5em;
   }
-  div.container div.userForm button, div.container form#formPOST button {
+  div.container div.userForm button, div.container form#formPOST button, div.container #logoutForm button {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
   }
-  div.container div.userForm input::-webkit-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-webkit-input-placeholder, div.container form#formPOST input {
+  div.container div.userForm input::-webkit-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-webkit-input-placeholder, div.container form#formPOST input, div.container #logoutForm input::-webkit-input-placeholder, div.container #logoutForm input {
     color: #ec0;
   }
-  div.container div.userForm input:-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input:-ms-input-placeholder, div.container form#formPOST input {
+  div.container div.userForm input:-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input:-ms-input-placeholder, div.container form#formPOST input, div.container #logoutForm input:-ms-input-placeholder, div.container #logoutForm input {
     color: #ec0;
   }
-  div.container div.userForm input::-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-ms-input-placeholder, div.container form#formPOST input {
+  div.container div.userForm input::-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-ms-input-placeholder, div.container form#formPOST input, div.container #logoutForm input::-ms-input-placeholder, div.container #logoutForm input {
     color: #ec0;
   }
-  div.container div.userForm input::placeholder, div.container div.userForm input, div.container form#formPOST input::placeholder, div.container form#formPOST input {
+  div.container div.userForm input::placeholder, div.container div.userForm input, div.container form#formPOST input::placeholder, div.container form#formPOST input, div.container #logoutForm input::placeholder, div.container #logoutForm input {
     color: #ec0;
   }
-  div.container div.userForm input::-webkit-input-placeholder, div.container form#formPOST input::-webkit-input-placeholder {
+  div.container div.userForm input::-webkit-input-placeholder, div.container form#formPOST input::-webkit-input-placeholder, div.container #logoutForm input::-webkit-input-placeholder {
     font-size: .8em;
     color: #ec0a;
   }
-  div.container div.userForm input:-ms-input-placeholder, div.container form#formPOST input:-ms-input-placeholder {
+  div.container div.userForm input:-ms-input-placeholder, div.container form#formPOST input:-ms-input-placeholder, div.container #logoutForm input:-ms-input-placeholder {
     font-size: .8em;
     color: #ec0a;
   }
-  div.container div.userForm input::-ms-input-placeholder, div.container form#formPOST input::-ms-input-placeholder {
+  div.container div.userForm input::-ms-input-placeholder, div.container form#formPOST input::-ms-input-placeholder, div.container #logoutForm input::-ms-input-placeholder {
     font-size: .8em;
     color: #ec0a;
   }
-  div.container div.userForm input::placeholder, div.container form#formPOST input::placeholder {
+  div.container div.userForm input::placeholder, div.container form#formPOST input::placeholder, div.container #logoutForm input::placeholder {
     font-size: .8em;
     color: #ec0a;
   }
-  div.container div.userForm button, div.container form#formPOST button {
+  div.container div.userForm button, div.container form#formPOST button, div.container #logoutForm button {
     cursor: pointer;
     background: #ec0;
     color: #000;
   }
-  div.container div.userForm button:hover, div.container form#formPOST button:hover {
+  div.container div.userForm button:hover, div.container form#formPOST button:hover, div.container #logoutForm button:hover {
     border-color: #ec0;
     background: #282828;
     color: #ec0;
