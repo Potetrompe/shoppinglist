@@ -20,7 +20,7 @@ const users = mongoose.model("users", usersSchema);
 //var data = [{item: "fItem"}, {item: "nItem"}, {item: "lItem"}];
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 
-
+ 
 const redirectLogin = (req, res, next) => {
     if(!req.session.userID){
         console.log(req.session.userID);
