@@ -126,6 +126,7 @@
     color: #282828;
   }
   div.container {
+    margin: 0 auto;
     color: white;
   }
   div.container div#feed {
@@ -207,7 +208,7 @@
     background: #ec0;
     color: #282828;
   }
-  div.container div.userForm, div.container form#formPOST, div.container #logoutForm {
+  div.container div#createGroupForm, div.container div.userForm, div.container form#formPOST, div.container #logoutForm {
     padding: 0 1em;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -217,7 +218,7 @@
         -ms-flex-direction: row;
             flex-direction: row;
   }
-  div.container div.userForm input, div.container div.userForm button, div.container form#formPOST input, div.container form#formPOST button, div.container #logoutForm input, div.container #logoutForm button {
+  div.container div#createGroupForm input, div.container div#createGroupForm button, div.container div.userForm input, div.container div.userForm button, div.container form#formPOST input, div.container form#formPOST button, div.container #logoutForm input, div.container #logoutForm button {
     -webkit-appearance: none;
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
@@ -229,59 +230,59 @@
     padding: .1em .4em;
     width: 20%;
   }
-  div.container div.userForm input, div.container form#formPOST input, div.container #logoutForm input {
+  div.container div#createGroupForm input, div.container div.userForm input, div.container form#formPOST input, div.container #logoutForm input {
     -webkit-box-flex: 4;
         -ms-flex-positive: 4;
             flex-grow: 4;
     margin-right: .5em;
   }
-  div.container div.userForm button, div.container form#formPOST button, div.container #logoutForm button {
+  div.container div#createGroupForm button, div.container div.userForm button, div.container form#formPOST button, div.container #logoutForm button {
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
   }
-  div.container div.userForm input::-webkit-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-webkit-input-placeholder, div.container form#formPOST input, div.container #logoutForm input::-webkit-input-placeholder, div.container #logoutForm input {
+  div.container div#createGroupForm input::-webkit-input-placeholder, div.container div#createGroupForm input, div.container div.userForm input::-webkit-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-webkit-input-placeholder, div.container form#formPOST input, div.container #logoutForm input::-webkit-input-placeholder, div.container #logoutForm input {
     color: #ec0;
   }
-  div.container div.userForm input:-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input:-ms-input-placeholder, div.container form#formPOST input, div.container #logoutForm input:-ms-input-placeholder, div.container #logoutForm input {
+  div.container div#createGroupForm input:-ms-input-placeholder, div.container div#createGroupForm input, div.container div.userForm input:-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input:-ms-input-placeholder, div.container form#formPOST input, div.container #logoutForm input:-ms-input-placeholder, div.container #logoutForm input {
     color: #ec0;
   }
-  div.container div.userForm input::-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-ms-input-placeholder, div.container form#formPOST input, div.container #logoutForm input::-ms-input-placeholder, div.container #logoutForm input {
+  div.container div#createGroupForm input::-ms-input-placeholder, div.container div#createGroupForm input, div.container div.userForm input::-ms-input-placeholder, div.container div.userForm input, div.container form#formPOST input::-ms-input-placeholder, div.container form#formPOST input, div.container #logoutForm input::-ms-input-placeholder, div.container #logoutForm input {
     color: #ec0;
   }
-  div.container div.userForm input::placeholder, div.container div.userForm input, div.container form#formPOST input::placeholder, div.container form#formPOST input, div.container #logoutForm input::placeholder, div.container #logoutForm input {
+  div.container div#createGroupForm input::placeholder, div.container div#createGroupForm input, div.container div.userForm input::placeholder, div.container div.userForm input, div.container form#formPOST input::placeholder, div.container form#formPOST input, div.container #logoutForm input::placeholder, div.container #logoutForm input {
     color: #ec0;
   }
-  div.container div.userForm input::-webkit-input-placeholder, div.container form#formPOST input::-webkit-input-placeholder, div.container #logoutForm input::-webkit-input-placeholder {
+  div.container div#createGroupForm input::-webkit-input-placeholder, div.container div.userForm input::-webkit-input-placeholder, div.container form#formPOST input::-webkit-input-placeholder, div.container #logoutForm input::-webkit-input-placeholder {
     font-size: .8em;
     color: #ec0a;
   }
-  div.container div.userForm input:-ms-input-placeholder, div.container form#formPOST input:-ms-input-placeholder, div.container #logoutForm input:-ms-input-placeholder {
+  div.container div#createGroupForm input:-ms-input-placeholder, div.container div.userForm input:-ms-input-placeholder, div.container form#formPOST input:-ms-input-placeholder, div.container #logoutForm input:-ms-input-placeholder {
     font-size: .8em;
     color: #ec0a;
   }
-  div.container div.userForm input::-ms-input-placeholder, div.container form#formPOST input::-ms-input-placeholder, div.container #logoutForm input::-ms-input-placeholder {
+  div.container div#createGroupForm input::-ms-input-placeholder, div.container div.userForm input::-ms-input-placeholder, div.container form#formPOST input::-ms-input-placeholder, div.container #logoutForm input::-ms-input-placeholder {
     font-size: .8em;
     color: #ec0a;
   }
-  div.container div.userForm input::placeholder, div.container form#formPOST input::placeholder, div.container #logoutForm input::placeholder {
+  div.container div#createGroupForm input::placeholder, div.container div.userForm input::placeholder, div.container form#formPOST input::placeholder, div.container #logoutForm input::placeholder {
     font-size: .8em;
     color: #ec0a;
   }
-  div.container div.userForm button, div.container form#formPOST button, div.container #logoutForm button {
+  div.container div#createGroupForm button, div.container div.userForm button, div.container form#formPOST button, div.container #logoutForm button {
     cursor: pointer;
     background: #ec0;
     color: #000;
   }
-  div.container div.userForm button:hover, div.container form#formPOST button:hover, div.container #logoutForm button:hover {
+  div.container div#createGroupForm button:hover, div.container div#createGroupForm button:focus, div.container div.userForm button:hover, div.container div.userForm button:focus, div.container form#formPOST button:hover, div.container form#formPOST button:focus, div.container #logoutForm button:hover, div.container #logoutForm button:focus {
     border-color: #ec0;
     background: #282828;
     color: #ec0;
   }
-  div.container div#loginForm {
+  div.container div#createGroupForm, div.container div#loginForm {
     display: block;
   }
-  div.container div#loginForm form {
+  div.container div#createGroupForm form, div.container div#loginForm form {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -290,7 +291,7 @@
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  div.container div#loginForm form input {
+  div.container div#createGroupForm form input, div.container div#loginForm form input {
     width: 100%;
   }
   div.container div#registerForm {
@@ -319,6 +320,69 @@
     color: #282828;
     border: 3px solid #282828;
     padding: 10px 20px;
+  }
+  div.container div#createGroupForm {
+    padding: 0;
+  }
+  div.container div#createGroupForm button {
+    padding: 0em;
+    margin-top: -.5em;
+    width: 30%;
+  }
+  div.container div#groupsForm table, div.container div#groupRequestsTable table {
+    background: #ec0;
+    border-radius: 5px;
+    width: 100%;
+    padding: .5em .2em;
+    margin-top: -.6em;
+  }
+  div.container div#groupsForm table th, div.container div#groupRequestsTable table th {
+    padding: 0 1em;
+    font-size: .7em;
+    text-align: left;
+  }
+  div.container div#groupsForm table td, div.container div#groupRequestsTable table td {
+    padding: 0 0 0 1em;
+    font-size: .7em;
+  }
+  div.container div#groupsForm table td select, div.container div#groupsForm table td button, div.container div#groupRequestsTable table td select, div.container div#groupRequestsTable table td button {
+    background: #ec0;
+    color: #282828;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+    outline: none;
+    font-size: .7em;
+    border: 2px solid #282828;
+    border-radius: 3px;
+    padding: .1em .4em;
+    margin: .1em 0;
+    cursor: pointer;
+  }
+  div.container div#groupsForm table td select, div.container div#groupRequestsTable table td select {
+    width: 100%;
+  }
+  div.container div#groupsForm table td form, div.container div#groupRequestsTable table td form {
+    margin: 0;
+  }
+  div.container div#groupsForm table td input, div.container div#groupRequestsTable table td input {
+    background: #ec0;
+    color: #282828;
+    font-size: .7em;
+    border: 2px solid #282828;
+    border-radius: 3px;
+    width: 70%;
+    padding: .1em .3em;
+    color: #282828;
+  }
+  div.container div#groupsForm table td button:hover, div.container div#groupsForm table td button:focus, div.container div#groupRequestsTable table td button:hover, div.container div#groupRequestsTable table td button:focus {
+    background: #282828;
+    color: #ec0;
+  }
+  div.container div#groupsForm table td:nth-of-type(1), div.container div#groupRequestsTable table td:nth-of-type(1) {
+    border-radius: 5px;
+    border: 2px solid #282828;
+    background: #282828;
+    color: #fff;
   }
   div#icons {
     color: #f00;
@@ -451,6 +515,12 @@
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
     grid-column: 2 / 3;
+  }
+  body div.container div#groupsForm table th, body div.container div#groupRequestsTable table th {
+    font-size: 1em;
+  }
+  body div.container div#groupsForm table td, body div.container div#groupRequestsTable table td {
+    font-size: 1em;
   }
 }
 

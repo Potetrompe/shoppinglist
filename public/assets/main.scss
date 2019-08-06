@@ -134,6 +134,7 @@
 
     div.container{
         // margin: 1em 20px; // made a scroll-bug
+        margin: 0 auto;
 
         color: white;
         div#feed{
@@ -221,7 +222,7 @@
         }
     
         //* Style for forms
-        div.userForm, form#formPOST, #logoutForm{
+        div#createGroupForm, div.userForm, form#formPOST, #logoutForm{
     
             // height: 250px;
             // width:  100%;
@@ -262,14 +263,14 @@
                 // border-color: $BG2;
                 color: #000;//$BG1;
             }
-            button:hover{
+            button:hover, button:focus{
                 border-color: $BG2;
                 background: $BG1;
                 color: $BG2;
             }
 
         }
-        div#loginForm{
+        div#createGroupForm, div#loginForm{
             display: block;
 
             form{
@@ -293,7 +294,6 @@
                 }
             }
         }
-
         div.userForm button{
             -webkit-appearance: none;
             box-shadow: none !important; 
@@ -304,6 +304,77 @@
             color: $BG1;
             border: 3px solid $BG1;
             padding: 10px 20px;
+        }
+        div#createGroupForm{
+            padding: 0;
+            button{
+                padding: 0em;
+                margin-top: -.5em;
+                width: 30%;
+            }
+        }
+        
+        
+        div#groupsForm table, div#groupRequestsTable table{
+
+            background: $BG2;
+            //border: 2px solid #fff;
+            border-radius: 5px;
+            width: 100%;
+
+            padding: .5em .2em;
+            margin-top: -.6em;
+            th{
+                padding: 0 1em;
+                font-size: .7em;
+                text-align: left;
+            }
+            td{
+                padding: 0 0 0 1em;
+                font-size: .7em;
+
+                select, button{
+                    background: $BG2;
+                    color: $BG1;
+                    //-webkit-appearance: none;
+                    box-shadow: none !important; 
+                    outline: none;
+                    font-size: .7em;
+                    // background:$BG1; //#fff;
+                    border: 2px solid $BG1;
+                    border-radius: 3px;
+                    padding: .1em .4em;
+                    margin: .1em 0;
+                    cursor: pointer;
+                }
+                select{
+                    width: 100%;
+                }
+                form{
+                    margin: 0;
+                }
+                input{
+                    background: $BG2;
+                    color: $BG1;
+                    font-size: .7em;
+                    border: 2px solid $BG1;
+                    border-radius: 3px;
+                    width: 70%;
+                    padding: .1em .3em;
+                    color: $BG1;
+                }
+                    button:hover, button:focus{
+                    background: $BG1;
+                    color: $BG2;
+                }
+            }
+            td:nth-of-type(1){
+                border-radius: 5px;
+                border: 2px solid $BG1;
+                background: $BG1; //* Is overwritten in group.ejs by DB
+                color: $COL1;
+            }
+
         }
     }
 
@@ -435,6 +506,16 @@
         }
         div.container{
             grid-column: 2 / 3;
+
+            
+            div#groupsForm table, div#groupRequestsTable table{
+                th{
+                    font-size: 1em;
+                }
+                td{
+                    font-size: 1em;
+                }
+            }
         }
         
     }

@@ -1,11 +1,74 @@
 <% let navHTML1 = "Home", navHTML2 = "Login/out", navHref1 = "./", navHref2 = "./users" %>
 <% include inc/header%>
 
+
 <div class="container">
 
-    Groups <br> 
+    <div id="createGroupForm" class="form">
+        <h1>Create group</h1>
+        <form action="./groups" method="POST">
+            <input type="text" name="name" placeholder="Name">
+            <input type="text" name="color" placeholder="Color"><br>
+            <button type="submit">Create</button>
+        </form>
+    </div>
 
-    something = <%= something %>
+    <div id="groupsForm" class="form">
+        <h2>Groups</h2>
+        <table>
+            <tr>
+                <th>Group Name</th>
+                <th>Members</th>
+                <th>Add people</th>
+            </tr>
+            <% for(i = 0; i < groupData.length; i++){%>
+            <tr>
+                <td style="background: <%= groupData[i].color%>"><%= groupData[i].name%></td>
+                <td>
+                    <select>
+                        <%for(let j = 0; j < groupData[i].users.length; j++){%>
+                        <option><%= groupData[i].users[j] %></option>
+                        <%}%>
+                    </select>
+                </td>
+                <td>
+                    <form action="/grouprequest" method="POST">
+                        <input type="text" name="username" placeholder="Username">
+                        <input type="hidden" name="group" value="<%= groupData[i].name%>">
+                        <button type="submit">Add</button>
+                    </form>
+                </td>                    
+            </tr>
+            <%}%>
+
+        </table>
+    </div>
+
+    <div id="groupRequestsTable">
+        <h2>Requests</h2>
+        <table>
+            <tr>
+                <th>Group</th>
+                <th>From</th>
+                <th>Join?</th>
+            </tr>
+            <% for(i = 0; i < groupRequestData.length; i++){%>
+            <tr>
+                <td><%= groupRequestData[i].group%></td>
+                <td><%= groupRequestData[i].from%></td>
+                <td>
+                    <form action="/addtogroup" method="POST">
+                        <input type="hidden" name="group" value="<%= groupRequestData[i].group%>">
+                        <button type="submit" name="answer" value="yes">Yes</button>
+                        <button type="submit" name="answer" value="no">No</button>
+                    </form>
+                </td>
+            </tr>
+            <%}%>
+        </table>
+
+    </div>
+
 
 </div>
 

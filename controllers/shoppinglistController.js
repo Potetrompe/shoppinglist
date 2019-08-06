@@ -11,16 +11,15 @@ mongoose.connect(mongoURL, { useNewUrlParser: true });
 //? Create schema - this is like a blueprint / template / "class"
 const shoppinglistSchema    = new mongoose.Schema({item: String, author: String});
 const usersSchema           = new mongoose.Schema({username: String, password: String, color: String});
-const groupSchema           = new mongoose.Schema({name: String, users: Array});
+const groupSchema           = new mongoose.Schema({name: String, users: Array, color: String});
+const groupRequestSchema    = new mongoose.Schema({from: String, to: String, group: String});
 
-const shoppinglist = mongoose.model("Shoppinglist", shoppinglistSchema);
-const users = mongoose.model("users", usersSchema);
-// var item1 = Shoppinglist({item: "from DB!"}).save(function(err){
-//     if(err) throw err;
-//     console.log("item saved");
-// });
+// const shoppinglist  = mongoose.model("Shoppinglist", shoppinglistSchema);
+const shoppinglist  = mongoose.model("shoppinglists", shoppinglistSchema);
+const users         = mongoose.model("users", usersSchema);
+const groups        = mongoose.model("groups", groupSchema);
+const groupRequests = mongoose.model("grouprequests", groupRequestSchema);
 
-//var data = [{item: "fItem"}, {item: "nItem"}, {item: "lItem"}];
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 
@@ -31,6 +30,7 @@ const redirectLogin = (req, res, next) => {
     }else{
         next();
     }
+    //next();
 }
 
 const redirectHome = (req, res, next) => {
@@ -102,16 +102,31 @@ module.exports = app => {
 
         res.render("./users.ejs", {userID: req.session.userID});
 
-
-       //res.send("login/register");
     });
 
     app.get("/groups", redirectLogin, (req, res) => {
+
+        //| local variables
+        let groupsFilter = {users: req.session.userName};
+        let groupRequestsFilter = {to: req.session.userName};
+        let groupData, groupRequestData;
+
+
+        groups.find(groupsFilter, (err, data) => {
+            if(err) throw err;
+            groupData = data;
+            //console.log("Groups: " + data);
+            
+            groupRequests.find(groupRequestsFilter, (err, data) => {
+                if(err) throw err;
+                groupRequestData = data;
+                //console.log("groupRequests: " + data);
+
+                    //console.log({groupData: groupData, groupRequestData: groupRequestData});
+                    res.render("./groups.ejs", {groupData: groupData, groupRequestData: groupRequestData});
+            });
+        });
         
-        res.render("./groups.ejs", {something: "some data"});
-        
-        
-        //res.send("Groups");
     });
 
     //? ADD item to DB
@@ -188,9 +203,7 @@ module.exports = app => {
             username: req.body.username,
             password: req.body.password
         }
-        console.log(`Userdata: `, userData);
-
-        
+        //console.log(`Userdata: `, userData);
 
         users.find({
                 username: userData.username
@@ -213,10 +226,10 @@ module.exports = app => {
                     if(req.session.userName == "admin"){
                         req.session.admin = true;
                     } 
-                    console.log(
-                        data[data.length-1], 
-                        userData.id,
-                        req.session.userName);
+                    // console.log(
+                    //     data[data.length-1], 
+                    //     userData.id,
+                    //     req.session.userName);
                     //res.send(data);
                 }
                 res.redirect("./");
@@ -229,16 +242,81 @@ module.exports = app => {
     app.post("/logout", redirectLogin, (req, res) => {
         //console.log(`Logging out User:${req.session.userID}`);
         //req.session.userID = 0;
-        console.log(req.body.userID);
         if(req.body.userID == req.session.userID){
             req.session.userID = 0;
+            req.session.userName = undefined;
             req.session.destroy(err => {
-                console.log(err, req.session);
+                if(err) throw err;
+                console.log(`Logged out userID: ${req.body.userID}`);
             });
         } 
         res.redirect("/users");
     }); 
 
+    //? Create group
+    app.post("/groups", redirectLogin, (req, res) => {
+        
+        
+        let groupData = {
+            //| {name: String, users: Array(String), color: String}
+            name: req.body.name,
+            users: [
+                req.session.userName
+            ],
+            color: req.body.color
+        }
+
+        groups(groupData).save((err, data) => {
+            if(err) throw err;
+            console.log("Posted to groups: " + data);
+        });
+
+        res.redirect("/groups");
+    }); 
+
+    //? Send group request
+    app.post("/grouprequest", redirectLogin, (req, res) => {
+        
+        let groupRequestData = {
+            from: req.session.userName,
+            to: req.body.username,
+            group: req.body.group
+        };
+        console.log(`Sendt request:`, groupRequestData);
+
+        groupRequests(groupRequestData).save((err, data) => {
+            if(err) throw err;
+            //console.log("Posted to groupRequests: " + data);
+        });
+
+        res.redirect("/groups");
+    }); 
+
+    //? Handle requests
+    app.post("/addtogroup", redirectLogin, (req, res) => {
+        
+        let requestData = {
+            user: req.session.userName,
+            group: req.body.group,
+            answer: req.body.answer
+        };
+        console.log(requestData);
+        
+        if(requestData.answer === "yes"){
+            groups.updateOne({name: requestData.group}, {$push: {"users": requestData.user}}, (err, affected, res) => {
+                if(err) throw err;
+                console.log(`Added user: ${requestData.user} to group: ${requestData.group}`);
+            });
+        }
+        groupRequests.deleteMany({to: requestData.user, group: requestData.group}, (err, data) => {
+            if(err) throw err;
+            console.log(`Deleted request from group: ${requestData.group}`);
+            res.redirect("/groups");
+        });   
+        
+    }); 
+    
+    
 
     //? DELETE with form
     app.delete("/:item", redirectLogin, function(req, res){
