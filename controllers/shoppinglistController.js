@@ -23,7 +23,7 @@ const users = mongoose.model("users", usersSchema);
 //var data = [{item: "fItem"}, {item: "nItem"}, {item: "lItem"}];
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 
- 
+
 const redirectLogin = (req, res, next) => {
     if(!req.session.userID){
         //console.log(req.session.userID);
@@ -158,20 +158,23 @@ module.exports = app => {
         }
         //console.log(userData);
 
-        users(userData).save((err, data) => {
+        bcrypt.hash(userData.password, saltRounds, (err, hash) => {
             if(err) throw err;
-            console.log("posted to users: " + data);
-            
-            users.find({username: userData.username, password: userData.password}, (err, data) => {
+            userData.password = String(hash);
+            //console.log(userData.password);
+
+            users(userData).save((err, data) => {
                 if(err) throw err;
-                req.session.userID = data[data.length-1]._id;
-                req.session.userName = data[data.length-1].username;
-                console.log(
-                    data, 
-                    `UserID: ${req.session.userID} - 
-                    Username: ${req.session.userName}`
-                    );
-                res.redirect("./");
+                console.log("posted to users: " + data);
+                
+                users.find({username: userData.username, password: userData.password}, (err, data) => {
+                    if(err) throw err;
+                    req.session.userID = data[data.length-1]._id;
+                    req.session.userName = data[data.length-1].username;
+
+                    console.log(`Username: ${req.session.userName}, UserID: ${req.session.userID}`);
+                    res.redirect("./");
+                });
             });
         });
         
@@ -185,32 +188,39 @@ module.exports = app => {
             username: req.body.username,
             password: req.body.password
         }
-        console.log(userData);
+        console.log(`Userdata: `, userData);
 
+        
 
         users.find({
-                username: userData.username, 
-                password: userData.password
+                username: userData.username
+                //password: userData.password
             }, (err, data) => {
             if(err) throw err;
 
-            if(data[data.length-1]){
-                
-                userData.id = data[data.length-1]._id;
-                req.session.userID = userData.id;
-                req.session.userName = userData.username;
-                if(req.session.userName == "admin"){
-                    req.session.admin = true;
-                } 
-                console.log(
-                    data[data.length-1], 
-                    userData.id,
-                    req.session.userName);
-                //res.send(data);
-            }else{
-                console.log(`No user with that combination!`);
-            }
-            res.redirect("./");
+            bcrypt.compare(userData.password, String(data[data.length-1].password), (err, passCheck) => {
+            
+                if(!data[data.length-1]){
+                    console.log(`No user with that combination!`);
+                }else if(!passCheck){
+                    console.log(data[data.length-1]);
+                    console.log(userData.password, String(data[data.length-1].password));
+                    console.log(`Wrong password!`);
+                }else if(passCheck){
+                    userData.id = data[data.length-1]._id;
+                    req.session.userID = userData.id;
+                    req.session.userName = userData.username;
+                    if(req.session.userName == "admin"){
+                        req.session.admin = true;
+                    } 
+                    console.log(
+                        data[data.length-1], 
+                        userData.id,
+                        req.session.userName);
+                    //res.send(data);
+                }
+                res.redirect("./");
+            });
         });
 
     });
