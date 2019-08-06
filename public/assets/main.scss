@@ -221,7 +221,7 @@
         }
     
         //* Style for forms
-        div.userForm, form#formPOST{
+        div.userForm, form#formPOST, #logoutForm{
     
             // height: 250px;
             // width:  100%;
@@ -234,7 +234,7 @@
                 box-shadow: none !important; 
                 outline: none;
                 font-size: 2em;
-                background: $BG1; //#fff;
+                background:$BG1; //#fff;
                 border: 2px solid $BG2;
                 border-radius: 5px;
                 padding: .1em .4em;

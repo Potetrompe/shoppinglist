@@ -1,6 +1,9 @@
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
+
 //? Connect to DB
 const mongoURL = "mongodb://admin:admin2000@ds221645.mlab.com:21645/shoppinglist";
 mongoose.connect(mongoURL, { useNewUrlParser: true });
@@ -23,7 +26,7 @@ const urlencodedParser = bodyParser.urlencoded({extended: false});
 
 const redirectLogin = (req, res, next) => {
     if(!req.session.userID){
-        console.log(req.session.userID);
+        //console.log(req.session.userID);
         res.redirect("/users")
     }else{
         next();
@@ -207,11 +210,12 @@ module.exports = app => {
             }else{
                 console.log(`No user with that combination!`);
             }
-            res.redirect("./users");
+            res.redirect("./");
         });
 
     });
 
+    //? Log out User
     app.post("/logout", redirectLogin, (req, res) => {
         //console.log(`Logging out User:${req.session.userID}`);
         //req.session.userID = 0;
