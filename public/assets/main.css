@@ -20,8 +20,8 @@
     grid-gap: 0.5em;
     -ms-grid-columns: 1fr;
         grid-template-columns: 1fr;
-    -ms-grid-rows: auto auto auto 22px;
-        grid-template-rows: auto auto auto 22px;
+    -ms-grid-rows: auto auto auto auto 22px;
+        grid-template-rows: auto auto auto auto 22px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -152,14 +152,18 @@
         -ms-flex-direction: row;
             flex-direction: row;
     border: 1px solid #282828;
-    padding: 0.5em;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: .2em;
   }
   div.container div#feed table tr th, div.container div#feed table tr td {
     text-align: start;
     width: 20%;
     word-wrap: break-word;
+    padding: .3em .5em;
+  }
+  div.container div#feed table tr td {
+    padding: .5em;
   }
   div.container div#feed table tr th:nth-of-type(1), div.container div#feed table tr td:nth-of-type(1) {
     -webkit-box-flex: 4;
@@ -170,6 +174,14 @@
     -webkit-box-flex: 1;
         -ms-flex-positive: 1;
             flex-grow: 1;
+  }
+  div.container div#feed table tr td:nth-of-type(2) {
+    padding: .5em;
+    border-radius: 5px;
+  }
+  div.container div#feed table tr td:nth-of-type(1) {
+    background-color: #fff;
+    border-radius: 5px;
   }
   div.container div#feed table tr:nth-of-type(1) {
     background: #ec0;
@@ -384,11 +396,11 @@
     background: #282828;
     color: #fff;
   }
-  div#icons {
-    color: #f00;
+  div#icons, div#groupSelect {
+    color: #fff;
     margin: .8em;
   }
-  div#icons h2 {
+  div#icons h2, div#groupSelect h2 {
     padding: .5em 1em;
     margin: 0;
     border: 2px solid #282828;
@@ -397,7 +409,7 @@
     color: #282828;
     font-size: 2em;
   }
-  div#icons ul#iconmenu {
+  div#icons ul#iconmenu, div#icons ul#groupMenu, div#groupSelect ul#iconmenu, div#groupSelect ul#groupMenu {
     list-style-type: none;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -414,36 +426,57 @@
     border: 2px solid #282828;
     border-radius: 5px;
   }
-  div#icons ul#iconmenu li {
+  div#icons ul#iconmenu li, div#icons ul#groupMenu li, div#groupSelect ul#iconmenu li, div#groupSelect ul#groupMenu li {
     cursor: pointer;
     padding: .5em;
+    border-radius: 5px;
   }
-  div#icons ul#iconmenu li img {
+  div#icons ul#iconmenu li img, div#icons ul#groupMenu li img, div#groupSelect ul#iconmenu li img, div#groupSelect ul#groupMenu li img {
     width: 75px;
     height: 75px;
   }
-  div#icons ul#iconmenu li:hover {
+  div#icons ul#iconmenu li:hover, div#icons ul#groupMenu li:hover, div#groupSelect ul#iconmenu li:hover, div#groupSelect ul#groupMenu li:hover {
     background: #fff3;
-    border-radius: 5px;
+  }
+  div#icons ul#groupMenu, div#groupSelect ul#groupMenu {
+    background: none;
+  }
+  div#icons ul#groupMenu li, div#groupSelect ul#groupMenu li {
+    font-size: 1.5em;
+    margin-right: .5em;
+    margin-bottom: .5em;
+    border: 1px solid #ec0;
+  }
+  div#groupSelect {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1 / span 1;
+    -ms-grid-row: 4;
+    -ms-grid-row-span: 1;
+    grid-row: 4 / span 1;
   }
   footer {
     padding: .5em;
     background: #0005;
     color: #fff;
     text-align: center;
-    grid-column: span 1;
-    grid-row: span 1;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1 / span 1;
+    -ms-grid-row: 5;
+    -ms-grid-row-span: 1;
+    grid-row: 5 / span 1;
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 785px) {
   body {
     margin: 0;
     font-size: .75em;
     -ms-grid-columns: 1fr 1fr;
         grid-template-columns: 1fr 1fr;
-    -ms-grid-rows: auto 1fr 30px;
-        grid-template-rows: auto 1fr 30px;
+    -ms-grid-rows: auto 1fr auto 30px;
+        grid-template-rows: auto 1fr auto 30px;
   }
   body header, body nav, body footer {
     -ms-grid-column: 1;
@@ -486,7 +519,10 @@
   body div.container {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
-    grid-column: 2/3;
+    grid-column: 2 / 3;
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 2;
+    grid-row: 2 / 4;
   }
   body div.container a#btnDelete {
     top: 7em;
@@ -499,28 +535,59 @@
     -ms-grid-row-span: 1;
     grid-row: 2 / 3;
   }
+  body div#groupSelect {
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+    grid-column: 1 / 2;
+    -ms-grid-row: 3;
+    -ms-grid-row-span: 1;
+    grid-row: 3 / 4;
+  }
+  footer {
+    -ms-grid-row: 4;
+    -ms-grid-row-span: 1;
+    grid-row: 4 / span 1;
+  }
 }
 
 @media screen and (min-width: 1280px) {
   body {
     -ms-grid-columns: 1fr 1fr 1fr;
         grid-template-columns: 1fr 1fr 1fr;
+    -ms-grid-rows: auto 1fr 30px;
+        grid-template-rows: auto 1fr 30px;
   }
   body header, body nav, body footer {
     -ms-grid-column: 1;
     -ms-grid-column-span: 3;
-    grid-column: 1/4;
+    grid-column: 1 / 4;
   }
   body div.container {
     -ms-grid-column: 2;
     -ms-grid-column-span: 1;
     grid-column: 2 / 3;
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 1;
+    grid-row: 2 / 3;
   }
   body div.container div#groupsForm table th, body div.container div#groupRequestsTable table th {
     font-size: 1em;
   }
   body div.container div#groupsForm table td, body div.container div#groupRequestsTable table td {
     font-size: 1em;
+  }
+  body div#groupSelect {
+    -ms-grid-column: 3;
+    -ms-grid-column-span: 1;
+    grid-column: 3 / 4;
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 1;
+    grid-row: 2 / 3;
+  }
+  body footer {
+    -ms-grid-row: 3;
+    -ms-grid-row-span: 1;
+    grid-row: 3 / 4;
   }
 }
 

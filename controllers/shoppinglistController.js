@@ -9,7 +9,7 @@ const mongoURL = "mongodb://admin:admin2000@ds221645.mlab.com:21645/shoppinglist
 mongoose.connect(mongoURL, { useNewUrlParser: true });
 
 //? Create schema - this is like a blueprint / template / "class"
-const shoppinglistSchema    = new mongoose.Schema({item: String, author: String});
+const shoppinglistSchema    = new mongoose.Schema({item: String, author: String, group: String});
 const usersSchema           = new mongoose.Schema({username: String, password: String, color: String});
 const groupSchema           = new mongoose.Schema({name: String, users: Array, color: String});
 const groupRequestSchema    = new mongoose.Schema({from: String, to: String, group: String});
@@ -62,31 +62,77 @@ module.exports = app => {
         //? Log session cookie & userID
         //console.log(req.session.userID, req.session.userName);
 
-        //? Get data from mongoDB and pass it to view
-        queryObj = {author: req.session.userName};
-        if(req.session.admin){queryObj = {}};
-        shoppinglist.find(queryObj, (err, data) => {
+        //? Find what groups user is in
+        queryObj = {users: req.session.userName}
+        let groupsArr = [];
+        let groupNamesArr = [];
+        let usersFromGroups = [];
+        groups.find(queryObj, (err, data) => {
             if(err) throw err;
+            data.forEach(groupObj => groupsArr.push({
+                "group": groupObj.name, 
+                "color": groupObj.color,
+                "users": groupObj.users
+            }));
+            groupsArr.forEach(obj => groupNamesArr.push(obj.group));
+            groupsArr.forEach(obj => usersFromGroups.push(obj.users));
+            // console.log(groupsArr, groupNamesArr);
+            // console.log(usersFromGroups);
 
-            //* only send what i use
-            let exp = [];
-            data.forEach(item => exp.push(
-                {
-                    id: item._id, 
-                    item: item.item,
-                    author: item.author
+            //| remove duplicates
+            let filteredUsersInGroups = [];
+            for (let prev, i = 0; i < usersFromGroups.length; i++) {
+                for (let j = 0; j < usersFromGroups[i].length; j++) {
+                    // console.log(usersFromGroups[i][j]);
+                    if(usersFromGroups[i][j] !== prev){
+                        filteredUsersInGroups.push(usersFromGroups[i][j]);
+                        prev = usersFromGroups[i][j];
+                    }
                 }
-            ));
+                
+            }
+            // console.log(filteredUsersInGroups);
 
-            //console.log(exp);
-            res.render("./index.ejs", {list: exp});
+
+            //? Get list-data from mongoDB and pass it to view
+            // queryObj = {author: req.session.userName};
+            queryObj = {group: {$in: groupNamesArr}};
+            if(req.session.admin){queryObj = {}};
+            shoppinglist.find(queryObj, (err, data) => {
+                if(err) throw err;
+    
+                //* only send what i use
+                let exp = [];
+                data.forEach(item => exp.push(
+                    {
+                        id: item._id, 
+                        item: item.item,
+                        author: item.author,
+                        group: item.group
+                    }
+                ));
+
+                //? colors from users in groups
+                let userAndTheirColor = [];
+                users.find({username: {$in: filteredUsersInGroups}}, (err, data) => {
+                    if(err) throw err;
+                    data.forEach(obj => userAndTheirColor.push({user: obj.username, color: obj.color}));
+                    //console.log(userAndTheirColor);
+
+                    
+                    //console.log(exp);
+                    res.render("./index.ejs", {
+                        list: exp, 
+                        groupColors: groupsArr, 
+                        activeGroup: req.session.currentGroup,
+                        userAndTheirColor: userAndTheirColor
+                    });
+                });
+    
+            });
         });
 
-        //? data from users (authorID and color)
-        users.find({/*item: "nameOfItem" */}, (err, data) => {
-            if(err) throw err;
-            //console.log("userData: " + data);
-        });
+
         
         /*
         //? Querying
@@ -147,9 +193,9 @@ module.exports = app => {
 
         let itemData = {
             //| {item: String, author: String}
-            //id: 1, //* TODO: change to unique || id to _id (mongoDB)
             item: req.body.item,
-            author: req.session.userName || "default"
+            author: req.session.userName || "unset",
+            group: req.body.group
         }
 
         //? Get data from view (or icons) and add it to mongoDB
@@ -157,6 +203,7 @@ module.exports = app => {
             if(err) throw err;
             //* Render with updated data
             //res.render("./index.ejs", {shoppinglist: data});
+            req.session.currentGroup = itemData.group;
             res.redirect("./");
         });
 

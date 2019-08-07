@@ -7,8 +7,43 @@
     let trActive = [];
     let exportArrOfID = "";
     let list = [];
+    let userAndTheirColor = [];
+    <% userAndTheirColor.forEach(obj => {%>
+        userAndTheirColor.push({ //* convert from ejs to js**
+            user: "<%= obj.user%>",
+            color: "<%= obj.color%>"
+        });
+    <%});%>
+    // console.log(userAndTheirColor);
+    let groupColors = [];
+    <% groupColors.forEach(obj => {%>
+        groupColors.push({ //* convert from ejs to js**
+            group: "<%= obj.group%>",
+            color: "<%= obj.color%>"
+        });
+    <%});%>
+    // console.log(groupColors);
+    let currentGroup = groupColors[0].group;
+    <% if(activeGroup != undefined){%>
+        currentGroup = "<%= activeGroup%>";
+    <%}%>
+    document.getElementById("formGroupName").value = currentGroup;
+    document
+        .getElementById("groupSelect")
+        .children[0]
+        .innerHTML = `Current group: ${currentGroup}`;
+    let nav = document.getElementsByTagName("nav")[0];
+    let liShowCurrGroup = document.createElement("li");
+    let aShowCurrGroup = document.createElement("a");
+    aShowCurrGroup.innerHTML = `On group: ${currentGroup}`;
+    liShowCurrGroup.appendChild(aShowCurrGroup);
+    nav.children[0].appendChild(liShowCurrGroup);
+    //console.log(nav.children[0]); // ul in nav
+    // console.log(document.getElementById("formGroupName").value);
 
-    //| maby calc color from bg
+    //* set focus to "Add to list" field
+    document.getElementById("formPOST").children[0].focus();
+
     function newIndex(text, author, id, bg, col){
         const tr        = document.createElement("tr");
         const tdText    = document.createElement("td");
@@ -21,19 +56,80 @@
         tdText.innerHTML    = text;
         tdAuthor.innerHTML  = author;
         tr.id               = id;
+
+        let userColor = userAndTheirColor.find(obj => obj.user == author).color;
+        tdAuthor.style.backgroundColor = String(userColor);
+        //| copy pasta from interwebs:
+        function lightOrDark(color) {
+
+            // Variables for red, green, blue values
+            var r, g, b, hsp;
+            
+            // Check the format of the color, HEX or RGB?
+            if (color.match(/^rgb/)) {
+        
+                // If HEX --> store the red, green, blue values in separate variables
+                color = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+                
+                r = color[1];
+                g = color[2];
+                b = color[3];
+            } 
+            else {
+                
+                // If RGB --> Convert it to HEX: http://gist.github.com/983661
+                color = +("0x" + color.slice(1).replace( 
+                color.length < 5 && /./g, '$&$&'));
+        
+                r = color >> 16;
+                g = color >> 8 & 255;
+                b = color & 255;
+            }
+            
+            // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+            hsp = Math.sqrt(
+            0.299 * (r * r) +
+            0.587 * (g * g) +
+            0.114 * (b * b)
+            );
+        
+            //console.log(color, hsp);
+            // Using the HSP value, determine whether the color is light or dark
+            if (hsp>197.5) { //hsp>127.5 actual value
+        
+                // return 'light';
+                tdAuthor.style.color = "#282828";
+            } 
+            else if(hsp !== 0){
+        
+                // return 'dark';
+                tdAuthor.style.color = "#fff";
+
+            }
+        }
+        lightOrDark(String(userColor));
+        if (String(userColor).includes("light") || String(userColor) == "white"){
+            tdAuthor.style.color = "#282828";
+            //console.log("light")
+        }else if(String(userColor).includes("dark")){
+            tdAuthor.style.color = "#fff";
+            //console.log("dark")
+        }
+        // console.log(userColor);
+
         
         tr.appendChild(tdText);
         tr.appendChild(tdAuthor);
 
-        if(!col || !bg){
-            tr.style.background = "#fff8";
-            tr.style.color = "#000"; //? calc from bg
-            //console.log("default clol");
-        }else if(col && bg){
-            tr.style.background = "#${bg}";
-            tr.style.color = "#${col}";
-            //console.log("set col: " + col);
-        }
+        // if(!col || !bg){
+        //     tr.style.background = "#fff8";
+        //     tr.style.color = "#000"; //? calc from bg
+        //     //console.log("default clol");
+        // }else if(col && bg){
+        //     tr.style.background = "#${bg}";
+        //     tr.style.color = "#${col}";
+        //     //console.log("set col: " + col);
+        // }
 
         tr.onclick = () => {
             //* Toggle active-class
@@ -65,19 +161,35 @@
     }
 
     //* Convert from obj => string => obj
+    //* OBS: two different lists here:
     <% list.forEach(obj => {
         %>list.push({
             id: "<%= obj.id%>",
             item: "<%= obj.item%>",
-            author: "<%= obj.author%>"
+            author: "<%= obj.author%>",
+            group: "<%= obj.group%>"
             }
         );<%
     });%>
     //console.log(list);
     
 
-    //| DUMMY: newIndex("text", "auth", ++ bg & col); 
-    list.forEach(obj => newIndex(obj.item, obj.author, obj.id));
+    let filteredList;
+    function filterFeed(group){
+
+        filteredList = list.filter(obj => obj.group == group);
+
+        //| reset feed
+        let feedHeader = feed.firstElementChild.firstElementChild.children[0];
+        feed.firstElementChild.firstElementChild.innerHTML = ""; 
+        feed.firstElementChild.firstElementChild.appendChild(feedHeader);
+        //console.log(feedHeader);
+
+        //| DUMMY: newIndex("text", "auth", ++ bg & col);
+        filteredList.forEach(obj => newIndex(obj.item, obj.author, obj.id));
+        // console.log(list, filteredList);
+    }
+    filterFeed(currentGroup);
     
 
     btnDelete.onclick = function(){
@@ -136,7 +248,8 @@
         icon.id = id;
 
         let dataToDB = {
-            item: icon.id
+            item: icon.id,
+            group: currentGroup
         };
         // console.log(JSON.stringify(dataToDB));
         // console.log(dataToDB);
@@ -166,4 +279,88 @@
     addIcon(`./assets/media/icons/milkL.png`, "Lett melk");
     addIcon(`./assets/media/icons/eggs.png`, "Egg");
     addIcon(`./assets/media/icons/ham.png`, "Sjinkepålegg");
+
+    //? Fill "Groups" w/data from DB
+    const groupMenu = document.getElementById("groupMenu");
+
+    const addGroup = (name, col) => {
+        
+        let li = document.createElement("li");
+        
+        li.innerHTML = name;  
+        li.style.backgroundColor = col;
+        //| copy pasta from interwebs:
+        function lightOrDark(color) {
+
+            // Variables for red, green, blue values
+            var r, g, b, hsp;
+            
+            // Check the format of the color, HEX or RGB?
+            if (color.match(/^rgb/)) {
+        
+                // If HEX --> store the red, green, blue values in separate variables
+                color = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+                
+                r = color[1];
+                g = color[2];
+                b = color[3];
+            } 
+            else {
+                
+                // If RGB --> Convert it to HEX: http://gist.github.com/983661
+                color = +("0x" + color.slice(1).replace( 
+                color.length < 5 && /./g, '$&$&'));
+        
+                r = color >> 16;
+                g = color >> 8 & 255;
+                b = color & 255;
+            }
+            
+            // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+            hsp = Math.sqrt(
+            0.299 * (r * r) +
+            0.587 * (g * g) +
+            0.114 * (b * b)
+            );
+        
+            //console.log(color, hsp);
+            // Using the HSP value, determine whether the color is light or dark
+            if (hsp>197.5) { //hsp>127.5 actual value
+        
+                // return 'light';
+                li.style.color = "#282828";
+            } 
+            else if(hsp !== 0){
+        
+                // return 'dark';
+                li.style.color = "#fff";
+
+            }
+        }
+        if (String(col).includes("light") || col == "white"){
+            li.style.color = "#282828";
+            //console.log("light")
+        }else if(String(col).includes("dark")){
+            li.style.color = "#fff";
+            //console.log("dark")
+        }
+        lightOrDark(col);
+        li.onclick = e => {
+            currentGroup = e.target.innerHTML;
+            document.getElementById("formGroupName").value = currentGroup;
+            document
+                .getElementById("groupSelect")
+                .children[0]
+                .innerHTML = `Group: ${currentGroup}`;
+            aShowCurrGroup.innerHTML = `On group: ${currentGroup}`;    
+
+            filterFeed(currentGroup);
+            // console.log(filteredList);
+            //console.log("switch group", e.target, currentGroup);
+        }
+
+        groupMenu.appendChild(li);
+    }
+    groupColors.forEach(obj => addGroup(obj.group, obj.color));
+
 

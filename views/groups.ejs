@@ -15,7 +15,7 @@
 
     <div id="groupsForm" class="form">
         <h2>Groups</h2>
-        <table>
+        <table id="groupsFormTable">
             <tr>
                 <th>Group Name</th>
                 <th>Members</th>
@@ -23,7 +23,7 @@
             </tr>
             <% for(i = 0; i < groupData.length; i++){%>
             <tr>
-                <td style="background: <%= groupData[i].color%>"><%= groupData[i].name%></td>
+                <td id="tdGroupName" class="tdGroupName" style="background-color: <%= groupData[i].color%>"><%= groupData[i].name%></td>
                 <td>
                     <select>
                         <%for(let j = 0; j < groupData[i].users.length; j++){%>
@@ -71,5 +71,7 @@
 
 
 </div>
+
+<script type="text/javascript"><% include ./inc/scriptGroup %></script>
 
 <% include inc/footer%>

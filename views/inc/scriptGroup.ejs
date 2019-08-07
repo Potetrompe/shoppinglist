@@ -1,0 +1,80 @@
+    
+    const tdGroupName = document.getElementById("tdGroupName");
+    // const groupsFormTable = document.getElementById("groupsFormTable"); 
+    const tdGroupArr = document.getElementsByClassName("tdGroupName");
+    
+    let groupData = [];
+    <% groupData.forEach(obj => {%>
+        groupData.push({ 
+            name: "<%= obj.name%>",
+            color: "<%= obj.color%>"
+        });
+    <%});%>
+    //console.log(groupData, tdGroupArr);
+
+    for (let i = 0; i < groupData.length; i++) {
+
+        let tr = tdGroupArr[i];
+        let color = groupData[i].color;
+        let col = color;
+        //console.log(tr, color);
+
+
+        //| copy pasta from interwebs:
+        // Variables for red, green, blue values
+        var r, g, b, hsp;
+        
+        // Check the format of the color, HEX or RGB?
+        if (color.match(/^rgb/)) {
+
+            // If HEX --> store the red, green, blue values in separate variables
+            color = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+            
+            r = color[1];
+            g = color[2];
+            b = color[3];
+        } 
+        else {
+            
+            // If RGB --> Convert it to HEX: http://gist.github.com/983661
+            color = +("0x" + color.slice(1).replace( 
+            color.length < 5 && /./g, '$&$&'));
+
+            r = color >> 16;
+            g = color >> 8 & 255;
+            b = color & 255;
+        }
+        
+        // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+        hsp = Math.sqrt(
+        0.299 * (r * r) +
+        0.587 * (g * g) +
+        0.114 * (b * b)
+        );
+
+        //console.log(color, hsp);
+        // Using the HSP value, determine whether the color is light or dark
+        if (hsp>197.5) { //hsp>127.5 actual value
+
+            // return 'light';
+            tr.style.color = "#282828";
+        } 
+        else if(hsp !== 0){
+
+            // return 'dark';
+            tr.style.color = "#fff";
+
+        }
+
+        if (String(col).includes("light") || col == "white"){
+            tr.style.color = "#282828";
+            //console.log("light")
+        }else if(String(col).includes("dark")){
+            tr.style.color = "#fff";
+            //console.log("dark")
+        }
+        
+        
+    }
+    
+

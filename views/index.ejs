@@ -16,6 +16,7 @@
     <!-- String manipulation here :vv: -->
     <form action="./" method="POST" id="formPOST">
         <input type="text" name="item" placeholder="Add to list" required>
+        <input type="hidden" id="formGroupName" name="group" value="unset">
         <button type="submit">Add item</button>
     </form>
 
@@ -30,6 +31,13 @@
 
 </div>
 
+<div id="groupSelect">
+
+    <h2>Groups</h2>    
+    <ul id="groupMenu">
+    </ul>
+
+</div>
 
     <script type="text/javascript"><% include ./inc/script %></script>
 
