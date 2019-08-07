@@ -177,35 +177,26 @@ module.exports = app => {
 
     //? ADD item to DB
     app.post("/", redirectLogin, urlencodedParser, (req, res) => {
-
-        console.log("Added " + req.body.item);
-        // console.log(req.body);
-        
-        // let liValue = "unset";
-
-        // if(req.body.item != undefined){
-        //     console.log("val from form");
-        //     liValue = req.body.item;
-        // }else if(req.body != undefined){
-        //     console.log("val from icons");
-        //     liValue = req.body.item;
-        // }
-
+            
         let itemData = {
             //| {item: String, author: String}
             item: req.body.item,
             author: req.session.userName || "unset",
             group: req.body.group
         }
+        
+        if(itemData.group != "unset"){
+            //? Get data from view (or icons) and add it to mongoDB
+            shoppinglist(itemData).save((err, data) => {
+                if(err) throw err;
+                //* Render with updated data
+                //res.render("./index.ejs", {shoppinglist: data});
+                req.session.currentGroup = itemData.group;
+                console.log("Added " + req.body.item);
+                res.redirect("./");
+            });
+        }
 
-        //? Get data from view (or icons) and add it to mongoDB
-        shoppinglist(itemData).save((err, data) => {
-            if(err) throw err;
-            //* Render with updated data
-            //res.render("./index.ejs", {shoppinglist: data});
-            req.session.currentGroup = itemData.group;
-            res.redirect("./");
-        });
 
     });
 
