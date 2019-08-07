@@ -2,16 +2,16 @@
 <% include inc/header%>
 
 
-<div class="container">
 
-    <div id="createGroupForm" class="form">
-        <h1>Create group</h1>
-        <form action="./groups" method="POST">
-            <input type="text" name="name" placeholder="Name">
-            <input type="text" name="color" placeholder="Color"><br>
-            <button type="submit">Create</button>
-        </form>
-    </div>
+<div id="createGroupForm" class="form">
+    <h2>Create group</h2>
+    <form action="./groups" method="POST">
+        <input type="text" name="name" placeholder="Name">
+        <input type="text" name="color" placeholder="Color"><br>
+        <button type="submit">Create</button>
+    </form>
+</div>
+<!-- <div class="container"> -->
 
     <div id="groupsForm" class="form">
         <h2>Groups</h2>
@@ -35,7 +35,8 @@
                     <form action="/grouprequest" method="POST">
                         <input type="text" name="username" placeholder="Username">
                         <input type="hidden" name="group" value="<%= groupData[i].name%>">
-                        <button type="submit">Add</button>
+                        <button type="submit" name="deleteGroup" value="NO">Add</button>
+                        <button type="submit" name="deleteGroup" value="YES">Delete group</button>
                     </form>
                 </td>                    
             </tr>
@@ -43,34 +44,35 @@
 
         </table>
     </div>
+<!-- </div> -->
 
-    <div id="groupRequestsTable">
-        <h2>Requests</h2>
-        <table>
-            <tr>
-                <th>Group</th>
-                <th>From</th>
-                <th>Join?</th>
-            </tr>
-            <% for(i = 0; i < groupRequestData.length; i++){%>
-            <tr>
-                <td><%= groupRequestData[i].group%></td>
-                <td><%= groupRequestData[i].from%></td>
-                <td>
-                    <form action="/addtogroup" method="POST">
-                        <input type="hidden" name="group" value="<%= groupRequestData[i].group%>">
-                        <button type="submit" name="answer" value="yes">Yes</button>
-                        <button type="submit" name="answer" value="no">No</button>
-                    </form>
-                </td>
-            </tr>
-            <%}%>
-        </table>
-
-    </div>
-
+<div id="groupRequestsTable">
+    <h2>Requests</h2>
+    <table>
+        <tr>
+            <th>Group</th>
+            <th>From</th>
+            <th>Join?</th>
+        </tr>
+        <% for(i = 0; i < groupRequestData.length; i++){%>
+        <tr>
+            <td><%= groupRequestData[i].group%></td>
+            <td><%= groupRequestData[i].from%></td>
+            <td>
+                <form action="/addtogroup" method="POST">
+                    <input type="hidden" name="group" value="<%= groupRequestData[i].group%>">
+                    <button type="submit" name="answer" value="yes">Yes</button>
+                    <button type="submit" name="answer" value="no">No</button>
+                </form>
+            </td>
+        </tr>
+        <%}%>
+    </table>
 
 </div>
+
+
+
 
 <script type="text/javascript"><% include ./inc/scriptGroup %></script>
 

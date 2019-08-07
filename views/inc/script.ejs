@@ -16,18 +16,23 @@
     <%});%>
     // console.log(userAndTheirColor);
     let groupColors = [];
-    <% groupColors.forEach(obj => {%>
-        groupColors.push({ //* convert from ejs to js**
-            group: "<%= obj.group%>",
-            color: "<%= obj.color%>"
-        });
-    <%});%>
+    <% if(groupColors.length != 0){
+        groupColors.forEach(obj => {%>
+            groupColors.push({ //* convert from ejs to js**
+                group: "<%= obj.group%>",
+                color: "<%= obj.color%>"
+            });
+        <%});
+    }%>
     // console.log(groupColors);
-    let currentGroup = groupColors[0].group;
     <% if(activeGroup != undefined){%>
-        currentGroup = "<%= activeGroup%>";
+        let currentGroup = "<%= activeGroup%>";
+    <%}else if(groupColors.length != 0){%>
+        let currentGroup = groupColors[0].group;
+        document.getElementById("formGroupName").value = currentGroup;
+    <%}else{%>
+        let currentGroup = "unset";
     <%}%>
-    document.getElementById("formGroupName").value = currentGroup;
     document
         .getElementById("groupSelect")
         .children[0]
@@ -44,7 +49,7 @@
     //* set focus to "Add to list" field
     document.getElementById("formPOST").children[0].focus();
 
-    function newIndex(text, author, id, bg, col){
+    function newIndex(text, author, id){
         const tr        = document.createElement("tr");
         const tdText    = document.createElement("td");
         const tdAuthor  = document.createElement("td");
@@ -121,15 +126,6 @@
         tr.appendChild(tdText);
         tr.appendChild(tdAuthor);
 
-        // if(!col || !bg){
-        //     tr.style.background = "#fff8";
-        //     tr.style.color = "#000"; //? calc from bg
-        //     //console.log("default clol");
-        // }else if(col && bg){
-        //     tr.style.background = "#${bg}";
-        //     tr.style.color = "#${col}";
-        //     //console.log("set col: " + col);
-        // }
 
         tr.onclick = () => {
             //* Toggle active-class

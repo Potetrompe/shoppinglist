@@ -119,7 +119,7 @@ module.exports = app => {
                     data.forEach(obj => userAndTheirColor.push({user: obj.username, color: obj.color}));
                     //console.log(userAndTheirColor);
 
-                    
+
                     //console.log(exp);
                     res.render("./index.ejs", {
                         list: exp, 
@@ -298,7 +298,33 @@ module.exports = app => {
             });
         } 
         res.redirect("/users");
-    }); 
+    });
+
+    //? Delete user
+    app.post("/deleteuser", redirectLogin, (req, res) => {
+
+        if(req.session.userID && req.session.userName){
+
+            shoppinglist.deleteMany({author: req.session.userName}, (err, data) => {
+                if(err) throw err;
+                console.log(`Cleared items from user: ${req.session.userName}`);
+
+                users.deleteMany({username: req.session.userName}, (err, data) => {
+                    if(err) throw err;
+                    console.log(`Deleted user: ${req.session.userName}`);
+
+                    console.log(`Logged out user: ${req.session.userName}`);
+                    req.session.userID = 0;
+                    req.session.userName = undefined;
+                    req.session.destroy(err => {
+                        if(err) throw err;
+    
+                        res.redirect("/users");
+                    });
+                });
+            });
+        } 
+    });
 
     //? Create group
     app.post("/groups", redirectLogin, (req, res) => {
@@ -327,14 +353,30 @@ module.exports = app => {
         let groupRequestData = {
             from: req.session.userName,
             to: req.body.username,
-            group: req.body.group
+            group: req.body.group,
+            deleteGroup: req.body.deleteGroup
         };
         console.log(`Sendt request:`, groupRequestData);
 
-        groupRequests(groupRequestData).save((err, data) => {
-            if(err) throw err;
-            //console.log("Posted to groupRequests: " + data);
-        });
+        if(groupRequestData.deleteGroup === "NO" && groupRequestData.to != ""){
+            groupRequests(groupRequestData).save((err, data) => {
+                if(err) throw err;
+                //console.log("Posted to groupRequests: " + data);
+            });
+        }else if(groupRequestData.deleteGroup === "YES"){
+            groups.deleteMany({name: groupRequestData.group}, (err, data) => {
+                if(err) throw err;
+                console.log("deleted group: " + groupRequestData.group);
+
+                shoppinglist.deleteMany({group: groupRequestData.group}, (err, data) => {
+                    console.log("deleted items in group: " + groupRequestData.group);
+                });
+                shoppinglist.deleteMany({group: {$in: ["unset", ""]}}, (err, data) => {
+                    if(err) throw err;
+                });
+            });
+        }
+        
 
         res.redirect("/groups");
     }); 

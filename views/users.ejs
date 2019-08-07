@@ -7,7 +7,11 @@
         <form method="POST" action="/logout" id="logoutForm">
             <input type="hidden" value="<%= userID %>" name="userID">
             <button type="submit">Log out</button>
-        </form>    
+        </form> 
+
+        <form method="POST" action="/deleteuser" id="deleteuserForm" style="display: none">
+            <button type="submit" class="warning">DELETE USER</button>
+        </form> 
     <% }else{ %>
 
     <!-- <h2 class="warning">WARNING, Not secure! Data not incrypted</h2> -->
@@ -38,6 +42,18 @@
 
     <% } %>
 </div>
+
+<script> 
+    let deleteuserForm = document.getElementById("deleteuserForm");
+    let button = document.createElement("button");
+    button.onclick = () => {
+        deleteuserForm.style.display = "block";
+        button.style.display = "none";
+    }
+    button.innerHTML = "DELETE USER";
+    button.classList.add("warning");
+    deleteuserForm.parentElement.appendChild(button);
+</script>
 
 
 <% include inc/footer%>
