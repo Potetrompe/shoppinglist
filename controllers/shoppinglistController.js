@@ -195,6 +195,8 @@ module.exports = app => {
                 console.log("Added " + req.body.item);
                 res.redirect("./");
             });
+        }else{
+            res.redirect("./");
         }
 
 

@@ -29,14 +29,15 @@
         let currentGroup = "<%= activeGroup%>";
     <%}else if(groupColors.length != 0){%>
         let currentGroup = groupColors[0].group;
-        document.getElementById("formGroupName").value = currentGroup;
+        
     <%}else{%>
         let currentGroup = "unset";
     <%}%>
+    document.getElementById("formGroupName").value = currentGroup;
     document
         .getElementById("groupSelect")
         .children[0]
-        .innerHTML = `Current group: ${currentGroup}`;
+        .innerHTML = `Group: ${currentGroup}`;
     let nav = document.getElementsByTagName("nav")[0];
     let liShowCurrGroup = document.createElement("li");
     let aShowCurrGroup = document.createElement("a");
@@ -100,7 +101,7 @@
         
             //console.log(color, hsp);
             // Using the HSP value, determine whether the color is light or dark
-            if (hsp>197.5) { //hsp>127.5 actual value
+            if (hsp>127.5) { //hsp>127.5 actual value
         
                 // return 'light';
                 tdAuthor.style.color = "#282828";
